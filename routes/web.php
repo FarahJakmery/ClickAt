@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CodeproductController;
+use App\Http\Controllers\Admin\FastproductController;
+use App\Http\Controllers\Admin\McategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// The first View that appear to the user is the login page
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
+Route::resource('mcategories', McategoryController::class);
+Route::resource('fastSellingProduct', FastproductController::class);
+Route::resource('products', ProductController::class);
+Route::resource('productWithCode', CodeproductController::class);
+
+require __DIR__ . '/auth.php';
