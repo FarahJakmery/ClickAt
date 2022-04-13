@@ -6,7 +6,8 @@
 
 @section('css')
     <!-- Sidemenu-respoansive-tabs css -->
-    <link href="../../assets/plugins/sidemenu-responsive-tabs/sidemenu-responsive-tabs.css" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/sidemenu-responsive-tabs/sidemenu-responsive-tabs.css') }}"
+        rel="stylesheet">
 @endsection
 
 @section('content')
@@ -23,10 +24,11 @@
                                     <div class="card-sigin">
                                         <div class="card-sigin d-flex mb-5">
                                             <a href="index.html">
-                                                <img src="../../assets/img/brand/favicon.png" class="sign-favicon-a ht-40"
-                                                    alt="logo">
-                                                <img src="../../assets/img/brand/favicon-white.png"
-                                                    class="sign-favicon-b ht-40" alt="logo">
+                                                {{-- Logo --}}
+                                                <img src="{{ URL::asset('images/Web_images/LOGO.png') }}"
+                                                    class="sign-favicon-a ht-90" alt="logo">
+                                                {{-- <img src="{{ URL::asset('assets/img/brand/favicon-white.png') }}"
+                                                    class="sign-favicon-b ht-40" alt="logo"> --}}
                                             </a>
                                             <h1 class="main-logo1 ms-1 me-0 my-auto tx-28 ps-1">Cl<span>ick</span>At</h1>
                                         </div>
@@ -83,7 +85,7 @@
                                                     </p>
                                                     <p>
                                                         ليس لديك حساب؟
-                                                        <a href="page-signup.html">
+                                                        <a href="{{ route('register') }}">
                                                             إنشاء حساب
                                                         </a>
                                                     </p>
@@ -102,8 +104,8 @@
             <div class="col-md-6 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
                 <div class="row wd-100p mr-center text-center">
                     <div class="col-md-12 col-lg-12 col-xl-12 my-auto mr-center wd-100p">
-                        <img src="../../assets/img/media/login.png" class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mr-center"
-                            alt="logo">
+                        <img src="{{ asset('/images/Web_images/login&register.jpeg') }}"
+                            class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mr-center" alt="logo">
                     </div>
                 </div>
             </div>
@@ -111,5 +113,5 @@
     </div>
 @endsection
 
-@section('scripts')
+@section('js')
 @endsection
