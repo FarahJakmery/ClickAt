@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Main Page
+    لوحة التحكم - ClickAt
 @endsection
 
 @section('css')
