@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CodeproductController;
 use App\Http\Controllers\Api\FastproductController;
 use App\Http\Controllers\Api\McategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,15 +37,25 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::middleware(['jwt.verify'])->group(function () {
     // Main Categories Route
     Route::resource('mcategories', McategoryController::class);
+    Route::get('mainCategory/{MainCategoryID}/fastSellingProducts', [McategoryController::class, 'showAllFastSellingProductsBelogsToMainCategory']);
+    Route::get('mainCategory/{MainCategoryID}/products', [McategoryController::class, 'showAllProductsBelogsToMainCategory']);
+
     // Fast Selling Route
     Route::get('fastSellingProduct', [FastproductController::class, 'index']);
     Route::get('fastSellingProduct/{id}', [FastproductController::class, 'show']);
-    Route::get('mainCategory/{MainCategoriesID}/fastSellingProduct/{fastSellingProductId}', [FastproductController::class, 'showFastSellingProductBelogsToMainCategory']);
+
     // Product Route
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/{id}', [ProductController::class, 'show']);
-    Route::get('mainCategory/{MainCategoriesID}/products/{productsId}', [ProductController::class, 'showProductBelogsToMainCategory']);
+
     // Product with code Route
-    Route::resource('productWithCode', CodeproductController::class);
+    // Route::resource('productWithCode', CodeproductController::class);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+
+    // Wishlist Routes
+    Route::get('Wishlist', [WishlistController::class, 'index']);
+    Route::post('AddFastProductToWishlist', [WishlistController::class, 'storeFastProduct']);
+    Route::post('AddProductToWishlist', [WishlistController::class, 'storeProduct']);
+    Route::post('AddCodeToWishlist', [WishlistController::class, 'storeCode']);
+    Route::delete('Wishlistdestroy', [WishlistController::class, 'destroy'])->name('apiwishlist.destroy');
 });
