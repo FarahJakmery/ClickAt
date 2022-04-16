@@ -65,7 +65,7 @@ class McategoryController extends Controller
         Mcategory::create($data);
 
         session()->flash('Add', 'تم إضافة التصنيف الرئيسي بنجاح');
-        return redirect('/mcategories');
+        return redirect('/admin/mcategories');
     }
 
     /**
