@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'mobile_number'
     ];
 
     /**
@@ -60,5 +61,44 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // ================================ Fast Product WishList ================================
+
+    public function fastProductWishlist()
+    {
+        return $this->belongsToMany(Fastproduct::class, 'fastproduct_wishlist')->withTimestamps();
+    }
+
+    public function fastProductWishlistHas($FastProductId)
+    {
+        return self::fastProductWishlist()->where('fastproduct_id', $FastProductId)->exists();
+    }
+
+    // ================================ Product WishList ================================
+
+    /**
+     * Get the wishlist of the user.
+     */
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'product_wishlist')->withTimestamps();
+    }
+
+    public function wishlistHas($productId)
+    {
+        return self::wishlist()->where('product_id', $productId)->exists();
+    }
+
+    // ================================ Code WishList ================================
+
+    public function CodeWishlist()
+    {
+        return $this->belongsToMany(Codeproduct::class, 'code_wishlist')->withTimestamps();
+    }
+
+    public function codeWishlistHas($CodeProductId)
+    {
+        return self::CodeWishlist()->where('fastproduct_id', $CodeProductId)->exists();
     }
 }
