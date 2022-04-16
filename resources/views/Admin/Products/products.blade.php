@@ -182,7 +182,7 @@
                         </button>
                     </div>
                     {{-- The Form --}}
-                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
                         autocomplete="on">
                         {{ csrf_field() }}
                         <div class="modal-body">

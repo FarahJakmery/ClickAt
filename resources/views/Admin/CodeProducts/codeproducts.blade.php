@@ -176,7 +176,7 @@
                         </button>
                     </div>
                     {{-- The Form --}}
-                    <form action="{{ route('productWithCode.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.productWithCode.store') }}" method="POST" enctype="multipart/form-data"
                         autocomplete="on">
                         {{ csrf_field() }}
                         <div class="modal-body">

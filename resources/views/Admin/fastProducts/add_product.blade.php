@@ -93,8 +93,8 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('fastSellingProduct.store') }}" method="POST" enctype="multipart/form-data"
-                        autocomplete="on">
+                    <form action="{{ route('admin.fastSellingProduct.store') }}" method="POST"
+                        enctype="multipart/form-data" autocomplete="on">
                         {{ csrf_field() }}
 
                         <h5>البيانات الأساسية للمنتج</h5>

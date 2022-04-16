@@ -87,7 +87,7 @@
             <div class="row row-sm">
                 @foreach ($products as $product)
                     <div class="col-md-6 col-lg-6 col-xl-4  col-sm-6">
-                        <a href="{{ route('fastSellingProduct.show', $product->id) }}">
+                        <a href="{{ route('admin.fastSellingProduct.show', $product->id) }}">
                             <div class="card">
                                 <div class="card-body h-100">
                                     <div class="pro-img-box">
