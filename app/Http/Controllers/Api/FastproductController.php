@@ -37,15 +37,4 @@ class FastproductController extends Controller
         }
         return $this->apiResponse($fastproduct, 'The Quick Selling Product Not Found', 401);
     }
-
-    public function showFastSellingProductBelogsToMainCategory($mcategory_id, $id)
-    {
-        $products_id = DB::table('fastproduct_mcategory')->where('mcategory_id', $mcategory_id)->pluck('fastproduct_id');
-        $product = DB::table('fastproducts')->whereIn('id', $products_id)->find($id);
-        $product_with_translate = Fastproduct::find($product->id);
-        if ($product_with_translate) {
-            return $this->apiResponse($product_with_translate, 'OK', 200);
-        }
-        return $this->apiResponse($product_with_translate, 'The Product Not Found', 401);
-    }
 }
