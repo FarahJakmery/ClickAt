@@ -6,7 +6,9 @@
                 <div class="col-xl-3 col-md-4 col-sm-12">
                     <div class="footer-widget mb-50">
                         <div class="footer-logo mb-30">
-                            <a href="index.html"><img src="img/logo-sm.png" alt=""></a>
+                            <a href="{{ route('user.home') }}">
+                                <img src="{{ URL::asset('Web/assets/img/logo-sm.png') }}" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -17,10 +19,18 @@
                         </div>
                         <div class="fw-link">
                             <ul>
-                                <li><a href="#">عن كليكات</a></li>
-                                <li><a href="#">منتجات بيع سريع</a></li>
-                                <li><a href="#">منتجات كليكات</a></li>
-                                <li><a href="#">تواصل معنا</a></li>
+                                <li>
+                                    <a href="{{ route('about') }}">عن كليكات</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('user.fastSellingProduct.index') }}">منتجات بيع سريع</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('user.products.index') }}">منتجات كليكات</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact') }}">تواصل معنا</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -32,11 +42,21 @@
                         </div>
                         <div class="fw-link">
                             <ul>
-                                <li><a href="#">ملابس</a></li>
-                                <li><a href="#">سيارات</a></li>
-                                <li><a href="#">أجهزة كهربائية</a></li>
-                                <li><a href="#">إلكترونيات</a></li>
-                                <li><a href="#">أثاث</a></li>
+                                <li>
+                                    <a href="#">ملابس</a>
+                                </li>
+                                <li>
+                                    <a href="#">سيارات</a>
+                                </li>
+                                <li>
+                                    <a href="#">أجهزة كهربائية</a>
+                                </li>
+                                <li>
+                                    <a href="#">إلكترونيات</a>
+                                </li>
+                                <li>
+                                    <a href="#">أثاث</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -48,11 +68,21 @@
                         </div>
                         <div class="fw-link">
                             <ul>
-                                <li><a href="#">حسابي</a></li>
-                                <li><a href="#">الحسم</a></li>
-                                <li><a href="#">عائدات</a></li>
-                                <li><a href="#">تاريخ الطلبات</a></li>
-                                <li><a href="#">تتبع الطلب</a></li>
+                                <li>
+                                    <a href="#">حسابي</a>
+                                </li>
+                                <li>
+                                    <a href="#">الحسم</a>
+                                </li>
+                                <li>
+                                    <a href="#">عائدات</a>
+                                </li>
+                                <li>
+                                    <a href="#">تاريخ الطلبات</a>
+                                </li>
+                                <li>
+                                    <a href="#">تتبع الطلب</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
