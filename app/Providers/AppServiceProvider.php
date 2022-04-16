@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Codeproduct;
+use App\Models\Fastproduct;
+use App\Models\Mcategory;
+use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::share('mainCategories', Mcategory::translated()->get());
+        View::share('fastSellingProducts', Fastproduct::translated()->get());
+        View::share('products', Product::translated()->get());
+        View::share('productsWithCodes', Codeproduct::translated()->get());
     }
 }
