@@ -34,4 +34,22 @@ class McategoryController extends Controller
         }
         return $this->apiResponse($MainCategory, 'The Main Category Not Found', 401);
     }
+
+    public function showAllFastSellingProductsBelogsToMainCategory($id)
+    {
+        $MainCategory = Mcategory::with('fastproducts')->find($id);
+        if ($MainCategory) {
+            return $this->apiResponse($MainCategory, 'OK', 200);
+        }
+        return $this->apiResponse($MainCategory, 'The Main Category Not Found', 401);
+    }
+
+    public function showAllProductsBelogsToMainCategory($id)
+    {
+        $MainCategory = Mcategory::with('products')->find($id);
+        if ($MainCategory) {
+            return $this->apiResponse($MainCategory, 'OK', 200);
+        }
+        return $this->apiResponse($MainCategory, 'The Product Not Found', 401);
+    }
 }
