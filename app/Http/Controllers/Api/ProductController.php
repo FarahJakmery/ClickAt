@@ -38,15 +38,4 @@ class ProductController extends Controller
         }
         return $this->apiResponse($product, 'The Product Not Found', 401);
     }
-
-    public function showProductBelogsToMainCategory($mcategory_id, $id)
-    {
-        $products_id = DB::table('mcategory_product')->where('mcategory_id', $mcategory_id)->pluck('product_id');
-        $product = DB::table('products')->whereIn('id', $products_id)->find($id);
-        $product_with_translate = Product::translated()->find($product->id);
-        if ($product_with_translate) {
-            return $this->apiResponse($product_with_translate, 'OK', 200);
-        }
-        return $this->apiResponse($product_with_translate, 'The Product Not Found', 401);
-    }
 }
