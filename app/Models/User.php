@@ -90,15 +90,12 @@ class User extends Authenticatable implements JWTSubject
         return self::wishlist()->where('product_id', $productId)->exists();
     }
 
-    // ================================ Code WishList ================================
-
-    public function CodeWishlist()
+    // ================================ Order Relationship  ================================
+    /**
+     * Get the orders for the user.
+     */
+    public function orders()
     {
-        return $this->belongsToMany(Codeproduct::class, 'code_wishlist')->withTimestamps();
-    }
-
-    public function codeWishlistHas($CodeProductId)
-    {
-        return self::CodeWishlist()->where('fastproduct_id', $CodeProductId)->exists();
+        return $this->hasMany(Order::class);
     }
 }
