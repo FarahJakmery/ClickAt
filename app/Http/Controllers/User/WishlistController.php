@@ -15,42 +15,40 @@ class WishlistController extends Controller
      */
     public function index()
     {
+        $Fastproducts = auth()->user()->fastProductWishlist()->latest()->get();
         $products = auth()->user()->wishlist()->latest()->get();
-        return view('User.Wishlist.wishlist', compact('products'));
+
+        return view('User.Wishlist.wishlist', compact('Fastproducts', 'products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
+    public function storeFastProduct()
+    {
+        if (!auth()->user()->fastProductWishlistHas(request('FastProductId'))) {
+            auth()->user()->fastProductWishlist()->attach(request('FastProductId'));
+            return $this->apiResponse(null, 'The Fast Product Added to Wishlist', 200);
+        }
+        return $this->apiResponse(null, 'The Fast Product already Added to Wishlist', 401);
+    }
+
+
+    public function storeProduct()
     {
         if (!auth()->user()->wishlistHas(request('productId'))) {
             auth()->user()->wishlist()->attach(request('productId'));
+            return $this->apiResponse(null, 'The Product Added to Wishlist', 200);
         }
+        return $this->apiResponse(null, 'The Product already Added to Wishlist', 401);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Wishlist  $wishlist
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Wishlist $wishlist)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Wishlist  $wishlist
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
+    public function destroy(Request $request)
     {
-        auth()->user()->wishlist()->detach(request('productId'));
+        if ($request->type == 1) {
+            auth()->user()->wishlist()->detach(request('Id'));
+            return $this->apiResponse(null, 'The Product Remove From Wishlist', 200);
+        } elseif ($request->type == 2) {
+            auth()->user()->fastProductWishlist()->detach(request('Id'));
+            return $this->apiResponse(null, 'The Fast Product Remove From Wishlist', 200);
+        }
     }
 }
