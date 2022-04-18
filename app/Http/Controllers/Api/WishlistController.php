@@ -45,16 +45,6 @@ class WishlistController extends Controller
     }
 
 
-    public function storeCode()
-    {
-        if (!auth()->user()->codeWishlistHas(request('codeId'))) {
-            auth()->user()->CodeWishlist()->attach(request('codeId'));
-            return $this->apiResponse(null, 'The Code Added to Wishlist', 200);
-        }
-        return $this->apiResponse(null, 'The Code already Added to Wishlist', 401);
-    }
-
-
     public function destroy(Request $request)
     {
         if ($request->type == 1) {
@@ -63,8 +53,6 @@ class WishlistController extends Controller
         } elseif ($request->type == 2) {
             auth()->user()->fastProductWishlist()->detach(request('Id'));
             return $this->apiResponse(null, 'The Fast Product Remove From Wishlist', 200);
-        } elseif ($request->type == 3)
-            auth()->user()->CodeWishlist()->detach(request('Id'));
-        return $this->apiResponse(null, 'The Code Added Remove From Wishlist', 200);
+        }
     }
 }
