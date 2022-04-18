@@ -23,7 +23,7 @@
                                         <a href="{{ route('home') }}">الرئيسية</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('about') }}">عن كليكات</a>
+                                        <a href="{{ route('user.about') }}">عن كليكات</a>
                                     </li>
                                     <li class="dropdown">
                                         <a href="{{ route('user.fastSellingProduct.index') }}">
@@ -53,7 +53,7 @@
                                             </li> --}}
                                     </li>
                                     <li>
-                                        <a href="{{ route('user.products.index') }}">منتجات كليكات</a>
+                                        <a href="{{ route('user.products.index') }}">منتجات خارجية</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('user.productWithCode.index') }}">أكواد كليكات</a>
@@ -502,22 +502,16 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="d-flex align-items-center justify-content-center justify-content-lg-end">
                         <div class="header-search-wrap">
-                            <form action="#">
-                                <input type="text" placeholder="ابحث عن طلبك.....">
-                                <select class="custom-select">
-                                    <option selected="">جميع الأقسام</option>
-                                    <option>ملابس نسائية</option>
-                                    <option>ملابس رجالية</option>
-                                    <option>كمبيوتر ومكتب</option>
-                                    <option>مستهلكى الكترونيات</option>
-                                    <option>المنزل والحديقة</option>
-                                    <option>أمتعة و حقائب</option>
-                                    <option>أحذية</option>
-                                    <option>الأم والاطفال</option>
-                                    <option>الصحة و الجمال</option>
-                                    <option>أجهزة منزلية</option>
-                                    <option>طعام</option>
-                                    <option>ملابس داخلية وملابس نوم</option>
+                            <form action="{{ route('user.search', $mainCategory->id) }}" method="get">
+                                {{ csrf_field() }}
+                                <input type="text" placeholder="ابحث عن طلبك....." name="searchWord">
+                                <select class="custom-select" name="mainCategoryId">
+                                    <option selected="" value="null">اختر القسم</option>
+                                    @foreach ($mainCategories as $mainCategory)
+                                        <option value="{{ $mainCategory->id }}">
+                                            {{ $mainCategory->translate('ar')->category_name }}
+                                        </option>
+                                    @endforeach
                                     <option>في جميع الفئات</option>
                                 </select>
                                 <button>
