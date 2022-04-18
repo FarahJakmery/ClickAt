@@ -4,8 +4,11 @@ use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CodeproductController;
 use App\Http\Controllers\Admin\FastproductController;
+use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\McategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\User\PageController;
+use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -31,16 +34,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-
-// Route::resource('users', UserController::class);
-
-// ============================ Users Routes ============================
-
-Route::view('/home', 'User.Auth.home')->name('home');
-Route::view('/about', 'User.pages.about')->name('about');
-Route::view('/contact', 'pages.contact')->name('contact');
-
-
 // ============================ Admin Routes ============================
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -59,10 +52,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('fastSellingProduct', FastproductController::class);
         Route::resource('products', ProductController::class);
         Route::resource('productWithCode', CodeproductController::class);
+        // About Routes
         Route::resource('about', AboutController::class);
+        // Features Routes
+        Route::resource('features', FeatureController::class);
     });
 });
 
+
+
+Route::view('/home', 'User.Auth.home')->name('home');
+
+Route::view('/contact', 'pages.contact')->name('contact');
+// ============================ Users Routes ============================
 Route::prefix('user')->name('user.')->group(function () {
 
     Route::middleware(['guest:web', 'PreventBackHistory'])->group(function () {
@@ -70,11 +72,6 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::view('/login', 'User.Auth.login')->name('login');
         Route::post('/create', [UserController::class, 'create'])->name('create');
         Route::post('/check', [UserController::class, 'check'])->name('check');
-    });
-
-    Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
-        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-        Route::get('/add-new', [UserController::class, 'add'])->name('add');
 
         // Main Categories Routes
         Route::resource('mcategories', McategoryController::class);
@@ -84,6 +81,17 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::resource('products', ProductController::class);
         // Products with Codes Routes
         Route::resource('productWithCode', CodeproductController::class);
+        // pages Routes
+        Route::get('/about', [PageController::class, 'about'])->name('about');
+        // Search Routes
+        Route::get('searchResult', [SearchController::class, 'search'])->name('search');
+    });
+
+    Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
+        Route::put('/profile/{profile}', [UserController::class, 'update'])->name('updateProfile');
+
         // WhishList Routes
         Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.index');
         Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
