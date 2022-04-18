@@ -17,3 +17,4 @@
 <link rel="stylesheet" href="{{ URL::asset('Web/assets/css/progress-circle.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('Web/assets/css/style-rtl.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('Web/assets/css/responsive-rtl.css') }}">
+@yield('css')
