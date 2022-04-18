@@ -20,7 +20,7 @@
                         <div class="fw-link">
                             <ul>
                                 <li>
-                                    <a href="{{ route('about') }}">عن كليكات</a>
+                                    <a href="{{ route('user.about') }}">عن كليكات</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('user.fastSellingProduct.index') }}">منتجات بيع سريع</a>
