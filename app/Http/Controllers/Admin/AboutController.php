@@ -17,7 +17,7 @@ class AboutController extends Controller
     public function index()
     {
         $abouts = About::translated()->get();
-        return view('Admin.AboutUs.about', compact('abouts'));
+        return view('Admin.Pages.about', compact('abouts'));
     }
 
     /**
