@@ -24,4 +24,12 @@ class Fastproduct extends Model implements TranslatableContract
     {
         return $this->belongsToMany(Mcategory::class);
     }
+
+    /**
+     * Get the orderItem associated with the fastProduct.
+     */
+    public function orderItem()
+    {
+        return $this->hasOne(OrderItem::class);
+    }
 }
