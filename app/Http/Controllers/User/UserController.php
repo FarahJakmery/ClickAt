@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -21,9 +23,9 @@ class UserController extends Controller
         //Validate Inputs
         $request->validate([
             'name'            => 'required|string|max:255',
-            'email'           => 'required|email|unique:users,email',
-            'password'        => 'required|confirmed|min:5|max:30',
-            'mobile_number'   => 'required',
+            'email'           => 'required|string|email|unique:users,email',
+            'password'        => 'required|confirmed|string|min:5|max:30',
+            'mobile_number'   => 'required|string|min:10|max:25',
         ]);
 
         $user = new User();
@@ -57,6 +59,46 @@ class UserController extends Controller
             return redirect()->route('user.login')->with('fail', 'بيانات الاعتماد غير صحيحة');
         }
     }
+
+    public function edit()
+    {
+        $user = User::find(Auth::user()->id);
+        return view('User.Auth.edit_user_info', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        Validator::make(
+            $request->all(),
+            [
+                'name'            => 'required|strinf|max:255',
+                'email'           => 'required|string|email', Rule::unique('users')->ignore(Auth::user()->id),
+                'password'        => 'required|confirmed|string|min:5|max:30',
+                'mobile_number'   => 'required|string|min:10|max:25',
+            ]
+        );
+
+        $user = User::find($id);
+        $user->update([
+            'name'           => $request->name,
+            'email'          => $request->email,
+            'mobile_number'  => $request->mobile_number,
+            'password'       => Hash::make($request->password),
+        ]);
+
+        if ($user) {
+
+            request()->session()->flash('success', 'تم تحديث بيانات المستخدم بنجاح');
+            return redirect()->route('user.home');
+        } else {
+            // request()->session()->flash('danger', 'حدث خطأ ما، فشل تعديل بيانات المستخدم');
+            // return redirect()->back()->with('fail', 'حدث خطأ ما، فشل تسجيل الحساب');
+            return redirect()->route('user.editProfile')->with('fail', 'بيانات الاعتماد غير صحيحة');
+        }
+    }
+
+
+
 
     function logout()
     {
