@@ -1245,3 +1245,8 @@
 		padding: 0;
 	}
 }
+@media (max-width:374px) {
+	.exclusive-item-content {
+		margin-top: -60px;
+	}
+}

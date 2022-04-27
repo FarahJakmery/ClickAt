@@ -1878,6 +1878,22 @@ label {
 	color: #0669ac;
 	margin-bottom: 15px;
 }
+.section-title .sub-title1{
+    display: block;
+    line-height: 1.5;
+    font-size: 14px;
+    width: 59%;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #ad9090;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 .section-title .title,
 .limited-offer-title .title  {
 	font-size: 34px;
@@ -2260,8 +2276,20 @@ label {
     -webkit-box-orient: vertical;
 }
 .exclusive--content--bottom span {
-	font-size: 14px;
+    font-size: 14px;
 	font-weight: 500;
+}
+.exclusive--content--description p {
+    line-height: 1.6;
+    overflow: hidden;
+    padding-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.exclusive--content--description p.fast-sell {
+    width: 76%;
+    margin: 0 auto;
 }
 .most-popular-viewed-item {
     background: #fff;
