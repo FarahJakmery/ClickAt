@@ -37,7 +37,10 @@ class ProductController extends Controller
             [
                 'product_name_ar'  => ['required|unique:products|max:255'],
                 'product_name_en'  => ['required|unique:products|max:255'],
+                'description_ar'   => ['required|string|max:255'],
+                'description_en'   => ['required|string|max:255'],
                 'url'              => ['required'],
+                'price'            => ['required'],
                 'photo_name'       => ['required|mimes:jpeg,png,jpg'],
                 'mcategories'      => ['required|array']
             ],
@@ -49,16 +52,19 @@ class ProductController extends Controller
         );
 
         // Store Image
-        $image_name = $this->saveImage($request->file('photo_name'), 'images/Product');
+        $image_name = $this->saveImage($request->file('photo_name'), 'images/Product', 300, 310);
 
         $data = [
             'photo_name'          => $image_name,
             'url'                 => $request['url'],
+            'price'               => $request['price'],
             'ar' => [
                 'product_name'    => $request['product_name_ar'],
+                'description'     => $request['description_ar'],
             ],
             'en' => [
                 'product_name'   => $request['product_name_en'],
+                'description'    => $request['description_en'],
             ],
         ];
 
@@ -67,7 +73,7 @@ class ProductController extends Controller
         $product->maincategories()->attach($request->mcategories);
 
         session()->flash('Add', 'تم إضافة المنتج بنجاح');
-        return redirect('/products');
+        return redirect('/admin/products');
     }
 
     /**
@@ -86,7 +92,10 @@ class ProductController extends Controller
             [
                 'product_name_ar'  => ['required|max:255|unique:products,photo_name,' . $id],
                 'product_name_en'  => ['required|max:255|unique:products,photo_name,' . $id],
+                'description_ar'   => ['required'],
+                'description_en'   => ['required'],
                 'url'              => ['required'],
+                'price'            => ['required'],
                 'photo_name'       => ['required|mimes:jpeg,png,jpg'],
                 'mcategories'      => ['required|array']
             ],
@@ -103,17 +112,20 @@ class ProductController extends Controller
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $image_name = $this->saveImage($request->file('photo_name'), 'images/Product');
+            $image_name = $this->saveImage($request->file('photo_name'), 'images/Product', 300, 310);
         }
 
         $data = [
             'photo_name'          => $image_name,
             'url'                 => $request['url'],
+            'price'               => $request['price'],
             'ar' => [
                 'product_name'    => $request['product_name_ar'],
+                'description'     => $request['description_ar'],
             ],
             'en' => [
                 'product_name'   => $request['product_name_en'],
+                'description'    => $request['description_en'],
             ],
         ];
 
@@ -122,7 +134,7 @@ class ProductController extends Controller
         $product->maincategories()->sync($request->mcategories);
 
         session()->flash('edit', 'تم تعديل المنتج بنجاح');
-        return redirect('/products');
+        return redirect('/admin/products');
     }
 
     /**
@@ -141,6 +153,6 @@ class ProductController extends Controller
         }
         $product->delete();
         session()->flash('delete', 'تم حذف المنتج بنجاح');
-        return redirect('/products');
+        return redirect('/admin/products');
     }
 }

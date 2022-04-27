@@ -38,7 +38,7 @@
 @endsection
 
 @section('title')
-    المنتجات
+    المنتجات الخارجية
 @endsection
 
 @section('page-header')
@@ -48,14 +48,14 @@
             <div class="my-auto">
                 <div class="d-flex">
                     <h4 class="content-title mb-0 my-auto">المنتجات</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
-                        منتجات</span>
+                        المنتجات الخارجية</span>
                 </div>
             </div>
         </div>
         {{-- Add Product Button --}}
         <div class="main-dashboard-header-right">
             <a class="modal-effect btn btn-primary btn-block" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal"
-                href="#modaldemo8">إضافة منتج</a>
+                href="#modaldemo8">إضافة منتج خارجي</a>
         </div>
     </div>
     <!-- breadcrumb -->
@@ -112,9 +112,10 @@
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>
-                                    <th class="border-bottom-0">اسم المنتج عربي</th>
-                                    <th class="border-bottom-0">اسم المنتج انجليزي</th>
+                                    <th class="border-bottom-0">اسم المنتج الخارجي عربي</th>
+                                    <th class="border-bottom-0">اسم المنتج الخارجي انجليزي</th>
                                     <th class="border-bottom-0">الرابط</th>
+                                    <th class="border-bottom-0">السعر</th>
                                     <th class="border-bottom-0">التصنيفات الرئيسية</th>
                                     <th class="border-bottom-0">صورة المنتج</th>
                                     <th class="border-bottom-0">الخيارات</th>
@@ -127,6 +128,7 @@
                                         <td>{{ $product->translate('ar')->product_name }}</td>
                                         <td>{{ $product->translate('en')->product_name }}</td>
                                         <td>{{ $product->url }}</td>
+                                        <td>{{ $product->price }}</td>
                                         <td>
                                             <ul>
                                                 @foreach ($product->maincategories as $maincategory)
@@ -145,9 +147,11 @@
                                                     data-bs-effect="effect-newspaper" data-id="{{ $product->id }}"
                                                     data-arabic_product_name="{{ $product->translate('ar')->product_name }}"
                                                     data-english_product_name="{{ $product->translate('en')->product_name }}"
-                                                    data-url="{{ $product->url }}" data-bs-toggle="modal"
-                                                    href="#EditModal" data-bs-placement="bottom" data-bs-toggle="tooltip"
-                                                    title="تعديل">
+                                                    data-arabic_description="{{ $product->translate('ar')->description }}"
+                                                    data-english_description="{{ $product->translate('en')->description }}"
+                                                    data-url="{{ $product->url }}" data-price="{{ $product->price }}"
+                                                    data-bs-toggle="modal" href="#EditModal" data-bs-placement="bottom"
+                                                    data-bs-toggle="tooltip" title="تعديل">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 {{-- The Delete Button --}}
@@ -215,6 +219,20 @@
                                                 <input class="form-control" id="url" name="url" rows="3" required>
                                             </div>
 
+                                            {{-- حقل ادخال وصف المنتج بالعربي --}}
+                                            <label for="arabic_description" class="control-label">وصف المنتج باللغة
+                                                العربية</label>
+                                            <textarea name="description_ar" id="arabic_description" class="form-control" cols="60" rows="3"
+                                                data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                                title="يرجي ادخال وصف المنتج" placeholder="...مثال: وصف المنتج بالعربية"
+                                                required></textarea>
+
+                                            {{-- حقل ادخال سعر المنتج --}}
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1"><b>السعر</b></label>
+                                                <input class="form-control" id="price" name="price" rows="3" required>
+                                            </div>
+
                                             {{-- حقل اختيار التصنيفات الرئيسية التابع لها المنتج --}}
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1"><b>التصنيفات الرئيسية</b></label>
@@ -246,6 +264,14 @@
                                                 </label>
                                                 <input type="text" class="form-control" name="product_name_en"
                                                     id="english_product_name" required>
+
+                                                {{-- حقل ادخال وصف باللغة الإنكليزية --}}
+                                                <label for="english_description" class="control-label">وصف المنتج باللغة
+                                                    الإنكليزية</label>
+                                                <textarea name="description_en" id="english_description" class="form-control" cols="60" rows="3"
+                                                    data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                                    title="please enter fast product description"
+                                                    placeholder="Ex: product description goes here" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -305,6 +331,20 @@
                                                 <input class="form-control" id="url" name="url" rows="3" required>
                                             </div>
 
+                                            {{-- حقل ادخال وصف المنتج بالعربي --}}
+                                            <label for="arabic_description" class="control-label">وصف المنتج باللغة
+                                                العربية</label>
+                                            <textarea name="description_ar" id="arabic_description" class="form-control" cols="60" rows="3"
+                                                data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                                title="يرجي ادخال وصف المنتج" placeholder="...مثال: وصف المنتج بالعربية"
+                                                required></textarea>
+
+                                            {{-- حقل ادخال سعر المنتج --}}
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1"><b>السعر</b></label>
+                                                <input class="form-control" id="price" name="price" rows="3" required>
+                                            </div>
+
                                             {{-- حقل اختيار التصنيفات الرئيسية التابع لها المنتج --}}
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1"><b>التصنيفات الرئيسية</b></label>
@@ -336,6 +376,14 @@
                                                 </label>
                                                 <input type="text" class="form-control" name="product_name_en"
                                                     id="english_product_name" required>
+
+                                                {{-- حقل ادخال وصف باللغة الإنكليزية --}}
+                                                <label for="english_description" class="control-label">وصف المنتج باللغة
+                                                    الإنكليزية</label>
+                                                <textarea name="description_en" id="english_description" class="form-control" cols="60" rows="3"
+                                                    data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                                    title="please enter fast product description"
+                                                    placeholder="Ex: product description goes here" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -446,12 +494,18 @@
             var id = button.data('id')
             var arabic_product_name = button.data('arabic_product_name')
             var english_product_name = button.data('english_product_name')
+            var arabic_description = button.data('arabic_description')
+            var english_description = button.data('english_description')
             var url = button.data('url')
+            var price = button.data('price')
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #arabic_product_name').val(arabic_product_name);
             modal.find('.modal-body #english_product_name').val(english_product_name);
+            modal.find('.modal-body #arabic_description').val(arabic_description);
+            modal.find('.modal-body #english_description').val(english_description);
             modal.find('.modal-body #url').val(url);
+            modal.find('.modal-body #price').val(price);
         })
     </script>
 

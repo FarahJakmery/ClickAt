@@ -13,8 +13,8 @@ class Product extends Model implements TranslatableContract
 
     protected $table = 'products';
 
-    protected $fillable = ['photo_name', 'url'];
-    public $translatedAttributes = ['product_name'];
+    protected $fillable = ['photo_name', 'url', 'price'];
+    public $translatedAttributes = ['product_name', 'description'];
 
     /**
      * The maincategories that belong to the product.
