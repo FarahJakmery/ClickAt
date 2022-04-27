@@ -509,7 +509,7 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="d-flex align-items-center justify-content-center justify-content-lg-end">
                         <div class="header-search-wrap">
-                            <form action="{{ route('user.search', $mainCategory->id) }}" method="get">
+                            <form action="{{ route('user.search') }}" method="get">
                                 {{ csrf_field() }}
                                 <input type="text" placeholder="ابحث عن طلبك....." name="searchWord">
                                 <select class="custom-select" name="mainCategoryId">
