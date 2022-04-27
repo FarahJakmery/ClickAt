@@ -127,6 +127,28 @@
                                 {{-- Row 2 --}}
                                 <div class="row">
                                     <div class="col">
+                                        <label for="arabic_description" class="control-label">وصف المنتج باللغة
+                                            العربية</label>
+                                        <textarea name="description_ar" id="arabic_description" class="form-control" cols="60" rows="3"
+                                            data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                            title="يرجي ادخال وصف المنتج" placeholder="...مثال: وصف المنتج بالعربية"
+                                            required></textarea>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="english_description" class="control-label">وصف المنتج باللغة
+                                            الإنكليزية</label>
+                                        <textarea name="description_en" id="english_description" class="form-control" cols="60" rows="3"
+                                            data-bs-placement="bottom" data-bs-toggle="tooltip"
+                                            title="please enter fast product description"
+                                            placeholder="Ex: product description goes here" required></textarea>
+                                    </div>
+
+                                </div><br>
+
+                                {{-- Row 3 --}}
+                                <div class="row">
+                                    <div class="col">
                                         <div class="col">
                                             <p class="mg-b-20">تاريخ إنشاء المنتج</p>
                                             <div class="row row-sm">
@@ -160,7 +182,7 @@
                                     </div>
                                 </div><br>
 
-                                {{-- Row 3 --}}
+                                {{-- Row 4 --}}
                                 <div class="row">
                                     <div class="col">
                                         <p class="mg-b-10">التصنيفات الرئيسية</p>
