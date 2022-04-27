@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Mcategory;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class McategoryController extends Controller
 {
@@ -37,7 +38,9 @@ class McategoryController extends Controller
 
     public function showAllFastSellingProductsBelogsToMainCategory($id)
     {
-        $MainCategory = Mcategory::with('fastproducts')->find($id);
+        $MainCategory = Mcategory::with(['fastproducts' => function ($query) {
+            $query->where('expiry_date', '>', new Carbon);
+        }])->find($id);
         if ($MainCategory) {
             return $this->apiResponse($MainCategory, 'OK', 200);
         }
