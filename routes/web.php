@@ -111,8 +111,9 @@ Route::prefix('user')->name('user.')->group(function () {
 
         // WhishList Routes
         Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.index');
-        Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
-        Route::delete('wishlistdestroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+        Route::post('AddFastProductToWishlist', [WishlistController::class, 'storeFastProduct']);
+        Route::post('AddProductToWishlist', [WishlistController::class, 'storeProduct']);
+        Route::delete('Wishlistdestroy', [WishlistController::class, 'destroy'])->name('apiwishlist.destroy');
     });
 });
 
