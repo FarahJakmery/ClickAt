@@ -266,6 +266,17 @@
                                                 title="يرجى ادخال المدة التي سيتاقص بعدها سعر المنتج">
                                         </div>
                                     </div>
+                                    <div class="col">
+                                        <p class="mg-b-10">الكمية</p>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-text">
+                                                <span class="input-group-text">قطعة</span>
+                                            </div>
+                                            <input aria-label="Amount (to the nearest dollar)" class="form-control"
+                                                type="number" id="quantity" name="quantity" data-bs-placement="bottom"
+                                                data-bs-toggle="tooltip" title="يرجى ادخال الكمية المتاحة من هذا المنتج">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

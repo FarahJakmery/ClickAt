@@ -56,6 +56,7 @@ class FastproductController extends Controller
                 'max_price'                  => ['required'],
                 'counter'                    => ['required'],
                 'minutes'                    => ['required'],
+                'quantity'                    => ['required'],
                 'decreasing_value'           => ['required'],
                 'photo_name'                 => ['required'],
                 'mcategories'                => ['required'],
@@ -83,6 +84,7 @@ class FastproductController extends Controller
             'max_price'                  => $request['max_price'],
             'counter'                    => $counter,
             'minutes'                    => $request['minutes'],
+            'quantity'                   => $request['quantity'],
             'decreasing_value'           => $request['decreasing_value'],
             'product_date'               => $request['product_date'],
             'expiry_date'                => $request['expiry_date'],
@@ -102,7 +104,7 @@ class FastproductController extends Controller
         $product->mcategories()->attach($request->mcategories);
 
         session()->flash('Add', 'تم إضافة المنتج بنجاح');
-        return redirect('/fastSellingProduct');
+        return redirect('/admin/fastSellingProduct');
     }
 
     /**
@@ -152,6 +154,7 @@ class FastproductController extends Controller
                 'max_price'                  => ['required'],
                 'counter'                    => ['required'],
                 'minutes'                    => ['required'],
+                'quantity'                    => ['required'],
                 'decreasing_value'           => ['required'],
                 'photo_name'                 => ['required'],
                 'mcategories'                => ['required'],
@@ -188,6 +191,7 @@ class FastproductController extends Controller
             'max_price'                  => $request['max_price'],
             'counter'                    => $counter,
             'minutes'                    => $request['minutes'],
+            'quantity'                   => $request['quantity'],
             'decreasing_value'           => $request['decreasing_value'],
             'product_date'               => $request['product_date'],
             'expiry_date'                => $request['expiry_date'],
@@ -206,7 +210,7 @@ class FastproductController extends Controller
         $product->mcategories()->sync($request->mcategories);
 
         session()->flash('Add', 'تم تعديل المنتج بنجاح');
-        return redirect('/fastSellingProduct');
+        return redirect('/admin/fastSellingProduct');
     }
 
     /**
@@ -224,6 +228,6 @@ class FastproductController extends Controller
         }
         $fastProduct->delete();
         session()->flash('delete', 'تم حذف المنتج بنجاح');
-        return redirect('/fastSellingProduct');
+        return redirect('/admin/fastSellingProduct');
     }
 }
