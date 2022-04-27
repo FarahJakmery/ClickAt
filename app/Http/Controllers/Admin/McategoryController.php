@@ -48,7 +48,7 @@ class McategoryController extends Controller
         );
 
         // Store Image
-        $image_name = $this->saveImage($request->file('photo_name'), 'images/Main_Category');
+        $image_name = $this->saveImage($request->file('photo_name'), 'images/Main_Category', 230, 230);
 
         $data = [
             'photo_name'          => $image_name,
@@ -102,7 +102,7 @@ class McategoryController extends Controller
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $image_name = $this->saveImage($request->file('photo_name'), 'images/Main_Category');
+            $image_name = $this->saveImage($request->file('photo_name'), 'images/Main_Category', 230, 230);
         }
 
         $data = [
