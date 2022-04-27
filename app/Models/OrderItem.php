@@ -10,7 +10,7 @@ class OrderItem extends Model
     use HasFactory;
     protected $table = 'order_items';
 
-    protected $fillable = ['item_name', 'item_photo', 'quantity', 'current_price', 'product_id', 'order_id'];
+    protected $fillable = ['item_name', 'item_photo', 'quantity', 'current_price', 'fastproduct_id', 'order_id'];
 
     // ================================ Order Items Relationship ================================
 
