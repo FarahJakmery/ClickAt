@@ -27,15 +27,6 @@ class OrderController extends Controller
         return $this->apiResponse(null, 'There is not any orders for this user', 401);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,29 +39,33 @@ class OrderController extends Controller
         Validator::make(
             $request->all(),
             [
-                'order_number' => ['required'],
                 'total_price'  => ['required'],
-                'order_status' => ['required'],
                 'user_id'      => ['required'],
             ]
         );
 
+        $latestOrder = Order::orderBy('created_at', 'DESC')->first();
+        if ($latestOrder == null) {
+            $order_number = '#' . str_pad(0 + 1, 8, "0", STR_PAD_LEFT);
+        } else
+            $order_number = '#' . str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
         $order = Order::create([
-            'order_number'     => $request->order_number,
+            'order_number'     => $order_number,
             'total_price'      => $request->total_price,
-            'order_status'     => $request->order_status,
+            'order_status'     => "waiting",
             'user_id'          => $request->user_id,
         ]);
 
         $orderItems = $request->items;
+        $order_id = Order::latest()->first()->id;
         foreach ($orderItems as $orderItem) {
             $newOrderItem = OrderItem::create([
-                'item_name'      => $orderItem['item_name'],
-                'item_photo'     => $orderItem['item_photo'],
-                'quantity'       => $orderItem['quantity'],
-                'current_price'  => $orderItem['current_price'],
-                'product_id'     => $orderItem['product_id'],
-                'order_id'       => $orderItem['order_id'],
+                'item_name'          => $orderItem['item_name'],
+                'item_photo'         => $orderItem['item_photo'],
+                'quantity'           => $orderItem['quantity'],
+                'current_price'      => $orderItem['current_price'],
+                'fastproduct_id'     => $orderItem['fastproduct_id'],
+                'order_id'           => $order_id,
             ]);
             $newOrderItems = array();
             array_push($newOrderItems, $newOrderItem);
