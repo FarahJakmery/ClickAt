@@ -57,7 +57,6 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('Wishlist', [WishlistController::class, 'index']);
     Route::post('AddFastProductToWishlist', [WishlistController::class, 'storeFastProduct']);
     Route::post('AddProductToWishlist', [WishlistController::class, 'storeProduct']);
-    Route::post('AddCodeToWishlist', [WishlistController::class, 'storeCode']);
     Route::delete('Wishlistdestroy', [WishlistController::class, 'destroy'])->name('apiwishlist.destroy');
 
     // Order Routes
