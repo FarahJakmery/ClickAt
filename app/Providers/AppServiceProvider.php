@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Codeproduct;
 use App\Models\Fastproduct;
 use App\Models\Mcategory;
 use App\Models\Product;
+use App\Models\User;
+use App\Http\View\Composers\CartComposer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -32,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('fastSellingProducts', Fastproduct::translated()->get());
         View::share('products', Product::translated()->get());
         View::share('productsWithCodes', Codeproduct::translated()->get());
+
+        // Using class based composers...
+        View::composer('*', CartComposer::class);
     }
 }
