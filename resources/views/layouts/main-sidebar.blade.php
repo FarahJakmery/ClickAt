@@ -3,14 +3,15 @@
 <aside class="app-sidebar sidebar-scroll">
 
     <div class="main-sidebar-header active">
-        <a class="desktop-logo logo-light active" href="index.html"><img src="../../assets/img/brand/logo.png"
-                class="main-logo" alt="logo"></a>
-        <a class="desktop-logo logo-dark active" href="index.html"><img src="../../assets/img/brand/logo-white.png"
-                class="main-logo dark-theme" alt="logo"></a>
+        <a class="desktop-logo logo-light active" href="index.html"><img
+                src="{{ URL::asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
+        <a class="desktop-logo logo-dark active" href="index.html"><img
+                src="{{ URL::asset('assets/img/brand/logo-white.png') }}" class="main-logo dark-theme" alt="logo"></a>
         <a class="logo-icon mobile-logo icon-light active" href="index.html"><img
-                src="../../assets/img/brand/favicon.png" class="logo-icon" alt="logo"></a>
+                src="{{ URL::asset('assets/img/brand/favicon.png') }}" class="logo-icon" alt="logo"></a>
         <a class="logo-icon mobile-logo icon-dark active" href="index.html"><img
-                src="../../assets/img/brand/favicon-white.png" class="logo-icon dark-theme" alt="logo"></a>
+                src="{{ URL::asset('assets/img/brand/favicon-white.png') }}" class="logo-icon dark-theme"
+                alt="logo"></a>
     </div>
 
     <div class="main-sidemenu">
@@ -18,12 +19,13 @@
 
             <div class="dropdown user-pro-body">
                 <div class="">
-                    <img alt="user-img" class="avatar avatar-xl brround" src="../../assets/img/faces/6.jpg">
+                    <img alt="user-img" class="avatar avatar-xl brround"
+                        src="{{ URL::asset('assets/img/faces/6.jpg') }}">
                     <span class="avatar-status profile-status bg-green"></span>
                 </div>
                 <div class="user-info">
-                    <h4 class="fw-semibold mt-3 mb-0">{{ Auth::user()->name }}</h4>
-                    <span class="mb-0 text-muted">{{ Auth::user()->email }}</span>
+                    {{-- <h4 class="fw-semibold mt-3 mb-0">{{ Auth::user()->name }}</h4> --}}
+                    {{-- <span class="mb-0 text-muted">{{ Auth::user()->email }}</span> --}}
                 </div>
             </div>
         </div>
@@ -44,7 +46,7 @@
                 </a>
             </li>
             <li class="slide">
-                <a class="side-menu__item" href="{{ url('/' . ($page = 'mcategories')) }}">
+                <a class="side-menu__item" href="{{ url('/' . ($page = 'admin/mcategories')) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
@@ -72,18 +74,18 @@
                 </a>
                 <ul class="slide-menu">
                     <li>
-                        <a class="slide-item" href="{{ url('/' . ($page = 'fastSellingProduct')) }}">
+                        <a class="slide-item" href="{{ url('/' . ($page = 'admin/fastSellingProduct')) }}">
                             منتجات بيع سريع</a>
                     </li>
                     <li>
-                        <a class="slide-item" href="{{ url('/' . ($page = 'products')) }}">
-                            منتجات
+                        <a class="slide-item" href="{{ url('/' . ($page = 'admin/products')) }}">
+                            المنتجات الخارجية
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="slide">
-                <a class="side-menu__item" href="{{ url('/' . ($page = 'productWithCode')) }}">
+                <a class="side-menu__item" href="{{ url('/' . ($page = 'admin/productWithCode')) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path
@@ -93,6 +95,17 @@
                             d="M22 9h-4.79l-4.38-6.56c-.19-.28-.51-.42-.83-.42s-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1zM12 4.8L14.8 9H9.2L12 4.8zM18.5 19l-12.99.01L3.31 11H20.7l-2.2 8zM12 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                     </svg>
                     <span class="side-menu__label">الأكواد</span>
+                </a>
+            </li>
+            <li class="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ url('/' . ($page = 'admin/orders')) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path d="M5 5h15v3H5zm12 5h3v9h-3zm-7 0h5v9h-5zm-5 0h3v9H5z" opacity=".3" />
+                        <path
+                            d="M20 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM8 19H5v-9h3v9zm7 0h-5v-9h5v9zm5 0h-3v-9h3v9zm0-11H5V5h15v3z" />
+                    </svg>
+                    <span class="side-menu__label">سجل الطلبات</span>
                 </a>
             </li>
             {{-- <li class="slide ">

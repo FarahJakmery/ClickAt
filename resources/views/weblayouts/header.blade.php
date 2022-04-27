@@ -20,120 +20,127 @@
                             <div class="navbar-wrap main-menu d-none d-lg-flex">
                                 <ul class="navigation">
                                     <li class="active">
-                                        <a href="{{ route('home') }}">الرئيسية</a>
+                                        <a href="{{ route('user.home') }}">الرئيسية</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('user.about') }}">عن كليكات</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="{{ route('user.fastSellingProduct.index') }}">
+                                        <a href="{{ route('user.FastSellingProducts.index') }}">
                                             منتجات البيع السريع
                                         </a>
-                                        @foreach ($fastSellingProducts as $fastSellingProduct)
-                                            <ul class="submenu">
+                                        <ul class="submenu">
+                                            @foreach ($mainCategories as $mainCategory)
                                                 <li>
                                                     <a
-                                                        href="{{ route('admin.fastSellingProduct.show', $fastSellingProduct->id) }}">
-                                                        {{ $fastSellingProduct->name }}
+                                                        href="{{ route('user.showFastProductsForMainCategory', $mainCategory->id) }}">
+                                                        {{ $mainCategory->translate('ar')->category_name }}
                                                     </a>
                                                 </li>
-                                            </ul>
-                                        @endforeach
-                                        {{-- <li>
-                                                <a href="#">السيارات</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">الأثاث</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">الأجهزة الكهربائية</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">الالكترونيات</a>
-                                            </li> --}}
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="{{ route('user.Products.index') }}">منتجات خارجية</a>
+                                        <ul class="submenu">
+                                            @foreach ($mainCategories as $mainCategory)
+                                                <li>
+                                                    <a
+                                                        href="{{ route('user.showProductsForMainCategory', $mainCategory->id) }}">
+                                                        {{ $mainCategory->translate('ar')->category_name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </li>
                                     <li>
-                                        <a href="{{ route('user.products.index') }}">منتجات خارجية</a>
+                                        <a href="{{ route('user.Codes.index') }}">أكواد كليكات</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('user.productWithCode.index') }}">أكواد كليكات</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('contact') }}">تواصل معنا</a>
+                                        <a href="#">تواصل معنا</a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="header-action d-none d-md-block">
                                 <ul>
+                                    {{-- User Info --}}
+                                    <li class=" dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                            aria-expanded="false">
+                                            <i class="flaticon-user"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ route('user.login') }}">
+                                                تسجيل الدخول
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('user.login') }}">
+                                                إنشاء حساب
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('user.logout') }}"
+                                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                تسجيل خروج
+                                            </a>
+                                            <form action="{{ route('user.logout') }}" method="POST"
+                                                class="d-none" id="logout-form">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                    {{-- Wishlist --}}
                                     <li>
                                         <a href="{{ route('user.wishlist.index') }}">
                                             <i class="flaticon-heart"></i>
                                         </a>
                                     </li>
+                                    {{-- Shop-Cart --}}
                                     <li class="header-shop-cart">
                                         <a href="#">
                                             <i class="flaticon-shopping-bag"></i>
-                                            <span class="cart-count">2</span>
+                                            {{-- <span class="cart-count">{{ $count_items }}</span> --}}
                                         </a>
                                         <span class="cart-total-price">
-                                            <span>128.00</span>ر.س</span>
-                                        <ul class="minicart">
-                                            <li class="d-flex align-items-start">
-                                                <div class="cart-img">
-                                                    <a href="#">
-                                                        <img src="{{ asset('Web/assets/img/products/Mens-Casual-Shoes.jpg') }}"
-                                                            alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h4>
-                                                        <a href="#">حذاء رجالي</a>
-                                                    </h4>
-                                                    <div class="cart-price">
-                                                        <span class="new">
-                                                            <span>229.9</span>ر.س</span>
+                                            {{-- <span>{{ $price_for_all_thing }}</span>ر.س</span> --}}
+                                            {{-- @foreach ($fastProduct_detailss as $fastProducts) --}}
+                                            <ul class="minicart">
+                                                <li class="d-flex align-items-start">
+                                                    <div class="cart-img">
+                                                        <a href="#">
+                                                            {{-- <img src="{{ asset($fastProducts['fast_product']->photo_name) }}" --}}
+                                                            {{-- alt=""> --}}
+                                                        </a>
                                                     </div>
-                                                </div>
-                                                <div class="del-icon">
-                                                    <a href="#">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex align-items-start">
-                                                <div class="cart-img">
-                                                    <a href="#">
-                                                        <img src="{{ URL::asset('Web/assets/img/products/Stylish-Smart-Watch.jpg') }}"
-                                                            alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h4>
-                                                        <a href="#">ساعة ذكية</a>
-                                                    </h4>
-                                                    <div class="cart-price">
-                                                        <span class="new"><span>229.9</span>ر.س</span>
+                                                    <div class="cart-content">
+                                                        <h4>
+                                                            <a href="#">حذاء رجالي</a>
+                                                        </h4>
+                                                        <div class="cart-price">
+                                                            <span class="new">
+                                                                <span>229.9</span>ر.س</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="del-icon">
-                                                    <a href="#">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="total-price">
-                                                    <span class="f-left">المجموع:</span>
-                                                    <span class="f-right"><span>239.9</span>ر.س</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="checkout-link">
-                                                    <a href="#">حقيبة التسوق</a>
-                                                    <a class="red-color" href="#">الدفع</a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                                    <div class="del-icon">
+                                                        <a href="#">
+                                                            <i class="far fa-trash-alt"></i>
+                                                        </a>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="total-price">
+                                                        <span class="f-left">المجموع:</span>
+                                                        <span class="f-right">
+                                                            {{-- <span>{{ $price_for_all_thing }}</span>ر.س --}}
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="checkout-link">
+                                                        <a href="{{ route('user.Cart') }}">حقيبة التسوق</a>
+                                                        <a class="red-color" href="#">الدفع</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            {{-- @endforeach --}}
                                     </li>
                                 </ul>
                             </div>

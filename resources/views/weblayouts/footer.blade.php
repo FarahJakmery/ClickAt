@@ -23,13 +23,13 @@
                                     <a href="{{ route('user.about') }}">عن كليكات</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('user.fastSellingProduct.index') }}">منتجات بيع سريع</a>
+                                    <a href="{{ route('user.FastSellingProducts.index') }}">منتجات بيع سريع</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('user.products.index') }}">منتجات كليكات</a>
+                                    <a href="{{ route('user.Products.index') }}">منتجات كليكات</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('contact') }}">تواصل معنا</a>
+                                    <a href="#">تواصل معنا</a>
                                 </li>
                             </ul>
                         </div>
@@ -42,21 +42,11 @@
                         </div>
                         <div class="fw-link">
                             <ul>
-                                <li>
-                                    <a href="#">ملابس</a>
-                                </li>
-                                <li>
-                                    <a href="#">سيارات</a>
-                                </li>
-                                <li>
-                                    <a href="#">أجهزة كهربائية</a>
-                                </li>
-                                <li>
-                                    <a href="#">إلكترونيات</a>
-                                </li>
-                                <li>
-                                    <a href="#">أثاث</a>
-                                </li>
+                                @foreach ($mainCategories as $mainCategory)
+                                    <li>
+                                        <a href="#">{{ $mainCategory->translate('ar')->category_name }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
