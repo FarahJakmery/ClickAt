@@ -49,7 +49,7 @@
                                                         {{ $product->translate('ar')->product_name }}
                                                     </a>
                                                 </h5>
-                                                <a href="#">
+                                                <a href="#" class="addtowishlist" data-product_id="{{ $product->id }}">
                                                     <i class="flaticon-heart"></i>
                                                 </a>
                                                 <span>{{ $product->price }}ر.س</span>
@@ -87,7 +87,32 @@
 @endsection
 
 @section('js')
-@endsection
-<div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
+    {{-- This Script is to Add to Wishlist --}}
+    <script>
+        $(document).ready(function() {
 
-</div>
+            $(document).on('click', '.addtowishlist', function(e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('user.AddProductToWishlist') }}",
+                    data: {
+                        'productId': $(this).attr('data-product_id'),
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
+
+        });
+    </script>
+@endsection
