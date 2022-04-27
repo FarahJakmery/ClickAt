@@ -691,9 +691,20 @@ $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc 
 $(".qtybutton").on("click", function () {
 	var $button = $(this);
 	var oldValue = $button.parent().find("input").val();
+	var maxValue = $button.parent().find("input").attr('max');
+	console.log(oldValue)
+	console.log(maxValue)
 	if ($button.text() == "+") {
-		var newVal = parseFloat(oldValue) + 1;
+		// Don't allow incrementing more than Max value
+		if (oldValue < parseInt(maxValue) ) {
+			var newVal = parseFloat(oldValue) + 1;
+			console.log(newVal)
+		} else {
+			newVal = maxValue;
+			console.log(newVal)
+		}
 	} else {
+		
 		// Don't allow decrementing below zero
 		if (oldValue > 0) {
 			var newVal = parseFloat(oldValue) - 1;
