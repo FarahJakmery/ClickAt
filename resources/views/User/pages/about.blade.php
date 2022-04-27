@@ -1,4 +1,4 @@
-@extends('webLayouts.master')
+@extends('weblayouts.master')
 
 @section('web_title')
     عن كليكات
@@ -6,7 +6,8 @@
 
 @section('web_content')
     <!-- breadcrumb-area -->
-    <section class="breadcrumb-area breadcrumb-bg" data-background="img/bg/breadcrumb_bg.jpg">
+    <section class="breadcrumb-area breadcrumb-bg"
+        data-background="{{ URL::asset('Web/assets/img/bg/breadcrumb_bg.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-12">
