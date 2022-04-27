@@ -86,7 +86,7 @@
     </div>
     <!-- top-cat-banner-end -->
 
-    <!-- exclusive-collection-area -->
+    <!-- External Products -->
     <section class="exclusive-collection pt-100 pb-60">
         <div class="container">
             <div class="row justify-content-center">
@@ -101,121 +101,54 @@
                 <div class="col-xl-6 col-lg-8">
                     <div class="product-menu mb-60">
                         <button class="active" data-filter="*">أفضل المبيعات</button>
-                        <button class="" data-filter=".cat-one">الملابس</button>
-                        <button class="" data-filter=".cat-two">السيارات</button>
-                        <button class="" data-filter=".cat-three">الالكترونيات</button>
-                        <button class="" data-filter=".cat-four">الاجهزة الكهربائية</button>
-                        <button class="" data-filter=".cat-five">الأثات</button>
+                        @foreach ($mainCategories as $mainCategory)
+                            <button class="" data-filter=".cat-{{ $mainCategory->id }}">
+                                {{ $mainCategory->translate('ar')->category_name }}
+                            </button>
+                        @endforeach
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="row exclusive-active">
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three" data-date="48:00:00">
-                                    <a href="shop-details.html">
-                                        <img src="{{ URL::asset('Web/assets/img/products/Beard-Trimmer.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">ماكينة تهذيب اللحية من فينام</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>58.00ر.س</span>
+                        @foreach ($mainCategories as $mainCategory)
+                            <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-{{ $mainCategory->id }}">
+                                @foreach ($mainCategory->products as $product)
+                                    <div class="exclusive-item mb-40">
+                                        <div class="exclusive-item-thumb exclusive-item-three" data-date="48:00:00">
+                                            <a href="{{ $product->url }}">
+                                                <img src="{{ asset($product->photo_name) }}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="exclusive-item-content">
+                                            <div class="exclusive--content--bottom">
+                                                <h5>
+                                                    <a href="{{ $product->url }}">
+                                                        {{ $product->translate('ar')->product_name }}
+                                                    </a>
+                                                </h5>
+                                                <a href="#">
+                                                    <i class="flaticon-heart"></i>
+                                                </a>
+                                                <span>{{ $product->price }}ر.س</span>
+                                            </div>
+                                            <div class="exclusive--content--description">
+                                                <p>
+                                                    {{ $product->translate('ar')->description }}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three">
-                                    <a href="shop-details.html">
-                                        <img src="{{ URL::asset('Web/assets/img/products/party-dress.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">فستان حفل أنيق</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>37.00ر.س</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-two">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three">
-                                    <a href="shop-details.html">
-                                        {{-- <img src="{{ URL::asset('Web/assets/img/products/Men's-Casual-Shoes.jpg') }}" alt=""> --}}
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">حذاء رجالي</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>26.00ر.س</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-three">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three">
-                                    <a href="shop-details.html">
-                                        <img src="{{ URL::asset('Web/assets/img/products/Stylish-Smart-Watch.jpg') }}"
-                                            alt="">
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">ساعة ذكية أنيقة</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>39.00ر.س</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three" data-date="48:00:00">
-                                    <a href="shop-details.html">
-                                        <img src="{{ URL::asset('Web/assets/img/products/Beard-Trimmer.jpg') }}" alt="">
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">ماكينة تهذيب اللحية من فينام</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>58.00ر.س</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-one cat-two">
-                            <div class="exclusive-item mb-40">
-                                <div class="exclusive-item-thumb exclusive-item-three">
-                                    <a href="shop-details.html">
-                                        <img src="{{ URL::asset('Web/assets/img/products/Venam-Beard-Laptop.jpg') }}"
-                                            alt="">
-                                    </a>
-                                </div>
-                                <div class="exclusive-item-content">
-                                    <div class="exclusive--content--bottom">
-                                        <h5><a href="shop-details.html">لابتوب فينام</a></h5>
-                                        <a href="#"><i class="flaticon-heart"></i></a>
-                                        <span>39.00ر.س</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- exclusive-collection-area-end -->
+    <!-- External Products-end -->
 
     <!-- exclusive-collection-area -->
     <section class="exclusive-collection pt-100 pb-55">
@@ -341,10 +274,10 @@
                                 </div>
                             </div>
                             <!-- <ul class="action action-timer">
-                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
-                                                        </ul> -->
+                                                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
+                                                                                        </ul> -->
                         </div>
                         <div class="exclusive-item-content">
                             <h5><a href="shop-details.html">حذاء رجالي</a></h5>
@@ -391,10 +324,10 @@
                                 </div>
                             </div>
                             <!-- <ul class="action action-timer">
-                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
-                                                        </ul> -->
+                                                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
+                                                                                        </ul> -->
                         </div>
                         <div class="exclusive-item-content">
                             <h5><a href="#">ساعة ذكية</a></h5>
@@ -441,10 +374,10 @@
                                 </div>
                             </div>
                             <!-- <ul class="action action-timer">
-                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
-                                                        </ul> -->
+                                                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
+                                                                                        </ul> -->
                         </div>
                         <div class="exclusive-item-content">
                             <h5><a href="#">ساعة ذكية</a></h5>
@@ -491,10 +424,10 @@
                                 </div>
                             </div>
                             <!-- <ul class="action action-timer">
-                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
-                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
-                                                        </ul> -->
+                                                                                            <li><a href="#"><i class=" flaticon-heart"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-supermarket"></i></a></li>
+                                                                                            <li><a href="#"><i class="flaticon-witness"></i></a></li>
+                                                                                        </ul> -->
                         </div>
                         <div class="exclusive-item-content">
                             <h5><a href="#">ساعة ذكية</a></h5>
