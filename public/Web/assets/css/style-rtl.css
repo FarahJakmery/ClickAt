@@ -583,6 +583,7 @@ label {
 }
 .menu-nav a img.logo {
     width: 95px;
+    height: 74px;
     margin: 10px 20px;
 }
 .navbar-wrap {
@@ -650,6 +651,29 @@ label {
     align-items: center;
     margin-right: 25px;
 }
+.mobile-menu .header-action {
+    margin: 0;
+}
+.mobile-menu .header-action > ul {
+    padding: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+}
+.mobile-menu .header-action > ul li {
+    margin-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    width: 100%;
+    padding: 10px 25px;
+}
+.mobile-menu .header-action > ul li .dropdown-toggle::after {
+    position: absolute;
+    left: -10px;
+    top: 11px;
+}
+.mobile-menu .header-action > ul li .dropdown-item {
+    color: #212529;
+}
 .header-action > ul li {
 	position: relative;
 	margin-right: 25px;
@@ -660,9 +684,23 @@ label {
 .header-action > ul > li.header-shop-cart > a {
 	padding-left: 10px;
 }
+.mobile-menu .header-action > ul > li.header-shop-cart > a {
+	padding-left: 0px;
+}
 .header-action ul li a {
     color: #2d2d2d;
     font-size: 18px;
+}
+.mobile-menu .header-action ul li a {
+    color: #fff;
+    font-size: 15px;
+    display: block;
+    /* width: 100px; */
+    justify-content: space-between;
+    position: relative;
+}
+.mobile-menu .header-action ul li a .text {
+    margin-right: 10px;
 }
 .header-shop-cart a {
 	position: relative;
@@ -680,6 +718,15 @@ label {
     font-weight: 500;
     line-height: 22px;
     background: #0568ab;
+}
+
+.mobile-menu .header-shop-cart a span.cart-count {
+    left: auto;
+    right: 7px;
+    width: 18px;
+    height: 18px;
+    line-height: 1.4;
+    font-size: 12px;
 }
 .header-shop-cart .cart-total-price {
     font-size: 14px;
@@ -1179,8 +1226,8 @@ label {
 	top: 15px;
 }
 .nav-logo img {
-	width: 100px;
-    height: 78px;
+	width: 83px;
+    height: 65px;
 }
 .mobile-menu {
 	position: fixed;
@@ -3655,6 +3702,20 @@ tbody .product-name span ,
 .order-complete-content .btn:hover,
 .my-account-content .form-grp-btn .btn:hover {
 	background: #222;
+}
+.search-area .empty-search ,
+.wishlist-area .empty-wishlist {
+    /* margin: 0 auto; */
+    text-align: center;
+}
+.search-area .empty-search .image-holder ,
+.wishlist-area .empty-wishlist .image-holder {
+    margin: 0 auto;
+    width: 230px;
+}
+.search-area .empty-search .image-holder img ,
+.wishlist-area .empty-wishlist .image-holder img {
+    width: 100%;
 }
 .cart-plus {
 	width: 110px;

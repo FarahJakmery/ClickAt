@@ -354,6 +354,9 @@
 .header-action {
 	margin-left: 40px;
 }
+.header-action.main-nav {
+	display: none;
+}
 .header-shop-cart ul.minicart {
 	top: 51px;
 }
