@@ -104,16 +104,16 @@ Route::prefix('user')->name('user.')->group(function () {
 
     // });
 
-    // Route::middleware(['auth:web'])->group(function () {
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-    Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
-    Route::put('/profile/{profile}', [UserController::class, 'update'])->name('updateProfile');
+    Route::middleware(['auth:web'])->group(function () {
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
+        Route::put('/profile/{profile}', [UserController::class, 'update'])->name('updateProfile');
 
-    // WhishList Routes
-    Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
-    Route::delete('wishlistdestroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    // });
+        // WhishList Routes
+        Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.index');
+        Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+        Route::delete('wishlistdestroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    });
 });
 
 
