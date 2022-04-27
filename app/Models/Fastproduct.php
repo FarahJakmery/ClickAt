@@ -15,7 +15,7 @@ class Fastproduct extends Model implements TranslatableContract
     protected $table = 'fastproducts';
 
     protected $fillable = ['product_number', 'photo_name', 'min_price', 'max_price', 'counter', 'minutes', 'decreasing_value', 'product_date', 'expiry_date'];
-    public $translatedAttributes = ['name'];
+    public $translatedAttributes = ['name', 'description'];
 
     /**
      * The main_categories that belong to the fastProduct.

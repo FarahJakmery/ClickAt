@@ -50,6 +50,8 @@ class FastproductController extends Controller
                 'product_number'             => ['required'],
                 'name_ar'                    => ['required'],
                 'name_en'                    => ['required'],
+                'description_ar'             => ['required'],
+                'description_en'             => ['required'],
                 'min_price'                  => ['required'],
                 'max_price'                  => ['required'],
                 'counter'                    => ['required'],
@@ -73,7 +75,7 @@ class FastproductController extends Controller
         // formating the result
         $counter = $interval->format('Year %y Month %m Day %d  Hours %h Minute %i Seconds %s ');
         // Store Image
-        $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product');
+        $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product', 230, 230);
 
         $data = [
             'product_number'             => $request['product_number'],
@@ -87,9 +89,11 @@ class FastproductController extends Controller
             'photo_name'                 => $image_name,
             'ar' => [
                 'name'                    => $request['name_ar'],
+                'description'             => $request['description_ar'],
             ],
             'en' => [
                 'name'                    => $request['name_en'],
+                'description'             => $request['description_en'],
             ],
         ];
 
@@ -142,6 +146,8 @@ class FastproductController extends Controller
                 'product_number'             => ['required'],
                 'name_ar'                    => ['required'],
                 'name_en'                    => ['required'],
+                'description_ar'             => ['required'],
+                'description_en'             => ['required'],
                 'min_price'                  => ['required'],
                 'max_price'                  => ['required'],
                 'counter'                    => ['required'],
@@ -160,7 +166,7 @@ class FastproductController extends Controller
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product');
+            $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product', 230, 230);
         }
 
         // fetch the values
@@ -188,9 +194,11 @@ class FastproductController extends Controller
             'photo_name'                 => $image_name,
             'ar' => [
                 'name'                    => $request['name_ar'],
+                'description'             => $request['description_ar'],
             ],
             'en' => [
                 'name'                    => $request['name_en'],
+                'description'             => $request['description_en'],
             ],
         ];
 
