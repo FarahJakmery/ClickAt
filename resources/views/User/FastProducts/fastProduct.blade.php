@@ -74,11 +74,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="exclusive-item-content">
+                                                        {{-- Name --}}
                                                         <h5>
-                                                            <a href="shop-details.html">
+                                                            <a href="#">
                                                                 {{ $fastproduct->translate('ar')->name }}
                                                             </a>
                                                         </h5>
+                                                        {{-- Current Price --}}
                                                         <div class="exclusive--item--price">
                                                             <span class="new-price">
                                                                 {{ $fastproduct->max_price }}ر.س
@@ -86,11 +88,18 @@
                                                             <input type="hidden" class="max_price"
                                                                 value="{{ $fastproduct->max_price }}">
                                                         </div>
+                                                        {{-- Description --}}
+                                                        <div class="exclusive--content--description">
+                                                            <p class="fast-sell">
+                                                                {{ $fastproduct->translate('ar')->description }}
+                                                            </p>
+                                                        </div>
+                                                        {{-- Add To Cart Button & Quantity --}}
                                                         <div class="add-to-cart">
                                                             <form action="#">
                                                                 <div class="cart-plus-minus">
                                                                     <input type="text" name="quantity" id="quantity"
-                                                                        value="{{ $fastproduct->quantity }}">
+                                                                        value="1" max="{{ $fastproduct->quantity }}">
                                                                 </div>
                                                                 <button class="btn addToCart"
                                                                     data-product_id="{{ $fastproduct->id }}">
@@ -99,6 +108,7 @@
                                                             </form>
                                                         </div>
                                                     </div>
+                                                    {{-- Timer --}}
                                                     <div class="viewed-offer-time">
                                                         <p>
                                                             <span>أسرع بالشراء </span>
