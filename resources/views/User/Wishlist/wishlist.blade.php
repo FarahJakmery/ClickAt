@@ -4,129 +4,234 @@
     المفضلة
 @endsection
 
+@section('css')
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{{ URL::asset('Web/assets/css/all.min.css') }}">
+@endsection
+
 @section('web_content')
-    <!-- Start Header -->
-    <!-- Start User Information List -->
-    <div class="profile">
-        <div class="user-list">
-            <div class="hide-show">
-                <i class="fas fa-cog"></i>
-            </div>
-            <div class="user-info">
-                <img src="{{ URL::asset('Web/assets/img/tshirt-02.png') }}" alt="">
-                <h3>{{ Auth::user()->first_name }}</h3>
-            </div>
-            <div class="options">
-                <div class="option">
-                    <div class="overlay-bg"></div>
-                    <a href="#">
-                        <span class="icon">
-                            <i class="far fa-user"></i>
-                        </span>
-                        تعديل البيانات
-                    </a>
-                </div>
-                <div class="option">
-                    <div class="overlay-bg"></div>
-                    <a href="{{ route('orders.index') }}">
-                        <span class="icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </span>
-                        طلباتي
-                    </a>
-                </div>
-                <div class="option active">
-                    <div class="overlay-bg"></div>
-                    <a href="{{ route('wishlist.index') }}">
-                        <span class="icon">
-                            <i class="far fa-heart"></i>
-                        </span>
-                        المفضلة
-                    </a>
-                </div>
-                <div class="option">
-                    <div class="overlay-bg"></div>
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                        <span class="icon">
-                            <i class="fas fa-sign-out-alt fa-rotate-180"></i>
-                        </span>
-                        تسجيل الخروج
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+    <!-- breadcrumb-area -->
+    <section class="breadcrumb-area breadcrumb-bg"
+        data-background="{{ URL::asset('Web/assets/img/bg/breadcrumb_bg.jpg') }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2>المفضلة</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('user.home') }}">الرئيسية</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">المفضلة</li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+    <!-- breadcrumb-area-end -->
 
-        <div class="profile-ordres">
-            <header>
-                <h2 class="title">المفضلة</h2>
-            </header>
-            <div class="prudact-container">
-                <div class="purchase-status">
-                    @isset($products)
-                        <ul class="head-list">
-                            <li>اسم المنتج</li>
-                            <li>رقم المنتج</li>
-                            <li>السعر</li>
-                            <li></li>
-                            <li></li>
+    <!-- wishlist-area -->
+    <section class="wishlist-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-desc-wrap mb-100">
+                        <ul class="nav nav-tabs mb-25" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab"
+                                    aria-controls="details" aria-selected="true">منتجات البيع السريع</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="val-tab" data-toggle="tab" href="#val" role="tab"
+                                    aria-controls="val" aria-selected="false">منتجات خارجية</a>
+                            </li>
                         </ul>
-                        @foreach ($products as $product)
-                            <ul class="item-in-list">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="details" role="tabpanel"
+                                aria-labelledby="details-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @empty($Fastproducts)
+                                                <div class="table-responsive-xl">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="product-thumbnail"></th>
+                                                                <th class="product-name">المنتج</th>
+                                                                <th class="product-price">السعر</th>
+                                                                <th class="product-quantity">الكمية</th>
+                                                                <th class="product-subtotal">التكلفة</th>
+                                                                <th class="product-add-to-cart"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($Fastproducts as $Fastproduct)
+                                                                <tr>
+                                                                    <td class="product-thumbnail">
+                                                                        <a href="#" class="wishlist-remove removeFromwishlist1"
+                                                                            data-product_id="{{ $Fastproduct->id }}"
+                                                                            data-type="2">
+                                                                            <i class="flaticon-cancel-1"></i>
+                                                                        </a>
+                                                                        <a href="shop-details.html">
+                                                                            <img src="{{ asset($Fastproduct->photo_name) }}"
+                                                                                alt="">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="product-name">
+                                                                        <h4>
+                                                                            <a
+                                                                                href="#">{{ $Fastproduct->translate('ar')->name }}</a>
+                                                                        </h4>
+                                                                    </td>
+                                                                    <td class="product-price">
+                                                                        <span>{{ $Fastproduct->max_price }}</span>ر.س
+                                                                    </td>
+                                                                    <td class="product-quantity">
+                                                                        <div class="cart-plus">
+                                                                            <form action="#">
+                                                                                <div class="cart-plus-minus">
+                                                                                    <input type="text"
+                                                                                        value="{{ $Fastproduct->quantity }}"
+                                                                                        disabled>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="product-subtotal">
+                                                                        <span></span>ر.س
+                                                                    </td>
+                                                                    <td class="product-add-to-cart">
+                                                                        <span>أضيفت في
+                                                                            {{ $product->created_at->format('Y M d') }}</span>
+                                                                        <a href="{{ route('user.Cart') }}"
+                                                                            class="btn">
+                                                                            إضافة إلى العربة
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <!-- wishlist-area -->
+                                                <section class="wishlist-area pt-100 pb-100">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="empty-wishlist">
+                                                                    <div class="image-holder">
+                                                                        <img src="{{ URL::asset('Web/assets/img/icon/wishlist.png') }}"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <h3>المفضلة فارغة</h3>
+                                                                    <p>لا يوجد منتجات بيع سريع مضافة للمفضلة</p>
+                                                                    <p>تسوق الآن و أضف بعض المنتجات</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- wishlist-area-end -->
+                                            @endempty
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="val" role="tabpanel" aria-labelledby="val-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @empty($products)
+                                                <div class="table-responsive-xl">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="product-thumbnail"></th>
+                                                                <th class="product-name">المنتج</th>
+                                                                <th class="product-price">السعر</th>
+                                                                <th class="product-add-to-cart"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($products as $product)
+                                                                <tr>
+                                                                    <td class="product-thumbnail">
+                                                                        <a href="#" class="wishlist-remove removeFromwishlist1"
+                                                                            data-product_id="{{ $product->id }}"
+                                                                            data-type="1">
+                                                                            <i class="flaticon-cancel-1"></i>
+                                                                        </a>
+                                                                        <a href="{{ $product->url }}">
+                                                                            <img src="{{ asset($product->photo_name) }}"
+                                                                                alt="">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="product-name">
+                                                                        <h4>
+                                                                            <a href="#">
+                                                                                {{ $product->translate('ar')->product_name }}
+                                                                            </a>
+                                                                        </h4>
+                                                                    </td>
+                                                                    <td class="product-price">
+                                                                        <span>{{ $product->price }}</span> ر.س
+                                                                    </td>
+                                                                    <td class="product-add-to-cart">
+                                                                        <span>أضيفت في
+                                                                            {{ $product->created_at->format('Y M d') }}</span>
+                                                                        <a href="{{ $product->url }}" class="btn">
+                                                                            تسوق الآن
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <!-- wishlist-area -->
+                                                <section class="wishlist-area pt-100 pb-100">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="empty-wishlist">
+                                                                    <div class="image-holder">
+                                                                        <img src="{{ URL::asset('Web/assets/img/icon/wishlist.png') }}"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <h3>المفضلة فارغة</h3>
+                                                                    <p>لا يوجد منتجات خارجية مضافة للمفضلة</p>
+                                                                    <p>تسوق الآن و أضف بعض المنتجات</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <!-- wishlist-area-end -->
+                                            @endempty
 
-                                <li class="img">
-                                    {{-- <img src="{{ asset('images/The_Product/' . $product->images->id) }}" alt=""> --}}
-                                </li>
-                                <li class="prodact-name">{{ $product->translate('ar')->product_name }}</li>
-                                <li class="prodact-name">#{{ $product->product_number }}</li>
-                                <li class="price">${{ $product->max_price }}</li>
-                                <li>
-                                    <a class="removeFromwishlist" href="#" data-product_id="{{ $product->id }}">
-                                        <button>
-                                            إزالة من المفضلة
-                                        </button>
-                                    </a>
-                                </li>
-                                <li>
-                                    <button>
-                                        إضافة للعربة
-                                    </button>
-                                </li>
-                            </ul>
-                        @endforeach
-                    @endisset
-
-                    @empty($products)
-                        // $records is "empty"...
-                    @endempty
-
-
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="prudact-page-number padbtm40">
-        <ul class="page-number">
-            <li class="number"><i class="fa fa-angle-right"></i></li>
-            <li class="number active">1</li>
-            <li class="number">2</li>
-            <li class="number">3</li>
-            <li class="number">4</li>
-            <li class="number"><i class="fa fa-angle-left"></i></li>
-        </ul>
-    </div>
-
-    <!-- End User Information List -->
+    </section>
+    <!-- wishlist-area-end -->
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function() {
 
-            $(document).on('click', '.removeFromwishlist', function(e) {
+            $(document).on('click', '.removeFromwishlist1', function(e) {
                 e.preventDefault();
 
                 $.ajaxSetup({
@@ -137,9 +242,10 @@
 
                 $.ajax({
                     type: "delete",
-                    url: "{{ route('wishlist.destroy') }}",
+                    url: "{{ route('user.wishlistDestroy') }}",
                     data: {
                         'productId': $(this).attr('data-product_id'),
+                        'type': $(this).attr('data-type'),
                     },
                     success: function(data) {
                         location.reload();
