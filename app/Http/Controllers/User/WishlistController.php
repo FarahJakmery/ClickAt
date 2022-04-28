@@ -35,20 +35,16 @@ class WishlistController extends Controller
     {
         if (!auth()->user()->wishlistHas(request('productId'))) {
             auth()->user()->wishlist()->attach(request('productId'));
-            return $this->apiResponse(null, 'The Product Added to Wishlist', 200);
         }
-        return $this->apiResponse(null, 'The Product already Added to Wishlist', 401);
     }
 
 
     public function destroy(Request $request)
     {
         if ($request->type == 1) {
-            auth()->user()->wishlist()->detach(request('Id'));
-            return $this->apiResponse(null, 'The Product Remove From Wishlist', 200);
+            auth()->user()->wishlist()->detach(request('productId'));
         } elseif ($request->type == 2) {
-            auth()->user()->fastProductWishlist()->detach(request('Id'));
-            return $this->apiResponse(null, 'The Fast Product Remove From Wishlist', 200);
+            auth()->user()->fastProductWishlist()->detach(request('productId'));
         }
     }
 }
