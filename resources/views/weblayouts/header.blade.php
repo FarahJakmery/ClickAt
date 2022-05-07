@@ -96,22 +96,24 @@
                                     <li class="header-shop-cart">
                                         <a href="#">
                                             <i class="flaticon-shopping-bag"></i>
-                                            {{-- <span class="cart-count">{{ $count_items }}</span> --}}
+                                            <span class="cart-count">{{ $array['count_items'] }}</span>
                                         </a>
-                                        <span class="cart-total-price">
-                                            {{-- <span>{{ $price_for_all_thing }}</span>ر.س</span> --}}
-                                            {{-- @foreach ($fastProduct_detailss as $fastProducts) --}}
+                                        @foreach ($array['fastProduct_detailss'] as $fastProducts)
+                                            <span class="cart-total-price">
+                                                <span>{{ $array['price_for_all_thing'] }}</span>ر.س
+                                            </span>
                                             <ul class="minicart">
                                                 <li class="d-flex align-items-start">
                                                     <div class="cart-img">
                                                         <a href="#">
-                                                            {{-- <img src="{{ asset($fastProducts['fast_product']->photo_name) }}" --}}
-                                                            {{-- alt=""> --}}
+                                                            <img src="{{ asset($fastProducts['fast_product']->photo_name) }}"
+                                                                alt="">
                                                         </a>
                                                     </div>
                                                     <div class="cart-content">
                                                         <h4>
-                                                            <a href="#">حذاء رجالي</a>
+                                                            <a
+                                                                href="#">{{ $fastProducts['fast_product']->translate('ar')->name }}</a>
                                                         </h4>
                                                         <div class="cart-price">
                                                             <span class="new">
@@ -129,7 +131,7 @@
                                                     <div class="total-price">
                                                         <span class="f-left">المجموع:</span>
                                                         <span class="f-right">
-                                                            {{-- <span>{{ $price_for_all_thing }}</span>ر.س --}}
+                                                            <span>{{ $array['price_for_all_thing'] }}</span>ر.س
                                                         </span>
                                                     </div>
                                                 </li>
@@ -140,7 +142,7 @@
                                                     </div>
                                                 </li>
                                             </ul>
-                                            {{-- @endforeach --}}
+                                        @endforeach
                                     </li>
                                 </ul>
                             </div>
