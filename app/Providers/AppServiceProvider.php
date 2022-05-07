@@ -9,6 +9,8 @@ use App\Models\Mcategory;
 use App\Models\Product;
 use App\Models\User;
 use App\Http\View\Composers\CartComposer;
+use App\Models\About;
+use App\Models\Feature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
@@ -36,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('mainCategories', Mcategory::translated()->get());
         View::share('fastSellingProducts', Fastproduct::translated()->get());
         View::share('products', Product::translated()->get());
-        View::share('productsWithCodes', Codeproduct::translated()->get());
+        View::share('Codes', Codeproduct::translated()->get());
+        View::share('feature', Feature::translated()->get());
 
         // Using class based composers...
         View::composer('*', CartComposer::class);
