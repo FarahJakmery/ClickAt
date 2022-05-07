@@ -112,7 +112,6 @@ class CartController extends Controller
 
     public function show()
     {
-
         $login = Auth::user();
         $quan_cart = 0;
 
@@ -225,14 +224,14 @@ class CartController extends Controller
                 $price                     = $all_pricee;
                 $price_for_all_thing      += $price;
                 $final                = array(
-                    'fast_product'      => $fastProductInformation,
-                    'cart'              => $fast_Product,
-                    'price'             => $price,
-                    'all_price'         => $all_price
+                    'fast_product'              => $fastProductInformation,
+                    'fast_product_quantity'     => $fast_Product->quantity,
+                    'price'                     => $price,
+                    'all_price'                 => $all_price
                 );
                 array_push($fastProduct_detailss, $final);
             }
-
+            // return $fastProduct_detailss;
             $count_items = count($fast_Products_From_Cart);
             return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'user', 'count_items', 'fastProduct_detailss', 'fast_Products_From_Cart', 'price'));
         }
