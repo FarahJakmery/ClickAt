@@ -67,7 +67,12 @@ class CartComposer
                 }
                 // return $fastProduct_detailss;
                 // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'count_items', 'mainCategories', 'price'));
-                $view->with('count_items', $count_items);
+                $array = [
+                    'price_for_all_thing' => $price_for_all_thing,
+                    'count_items' => $count_items,
+                    'fastProduct_detailss' => $fastProduct_detailss,
+                ];
+                $view->with('array', $array);
             }
             // If the arry of Ids is null => so it has not items in it
             else {
@@ -75,7 +80,12 @@ class CartComposer
                 $fastProduct_detailss = [];
                 $quan_cart = 0;
                 // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'mainCategories', 'count_items'));
-                $view->with('count_items', $count_items);
+                $array = [
+                    'price_for_all_thing' => $price_for_all_thing,
+                    'count_items' => $count_items,
+                    'fastProduct_detailss' => $fastProduct_detailss,
+                ];
+                $view->with('array', $array);
             }
         }
         // If the user is logged in
@@ -145,8 +155,12 @@ class CartComposer
 
             $count_items = count($fast_Products_From_Cart);
             // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'user', 'count_items', 'fastProduct_detailss', 'fast_Products_From_Cart', 'price'));
-
-            $view->with('price_for_all_thing', 'count_items');
+            $array = [
+                'price_for_all_thing' => $price_for_all_thing,
+                'count_items' => $count_items,
+                'fastProduct_detailss' => $fastProduct_detailss,
+            ];
+            $view->with('array', $array);
         }
     }
 }
