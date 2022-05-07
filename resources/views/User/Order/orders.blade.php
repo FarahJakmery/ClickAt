@@ -93,25 +93,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orderItems as $orderItem)
-                                            <tr>
-                                                <td class="product-thumbnail">
-                                                    <a href="#" class="wishlist-remove">
-                                                        <i class="flaticon-cancel-1"></i>
-                                                    </a>
-                                                    <a href="shop-details.html">
-                                                        <img src="{{ $orderItem->item_photo }}" alt="">
-                                                    </a>
-                                                </td>
-                                                <td class="product-name">
-                                                    <h4><a href="#">{{ $orderItem->item_name }}</a></h4>
-                                                </td>
-                                                <td class="product-quantity">{{ $orderItem->quantity }}</td>
-                                                <td class="product-subtotal">
-                                                    <span>{{ $orderItem->current_price }}</span>ر.س
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        {{-- @foreach ($orderItems as $orderItem) --}}
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <a href="#" class="wishlist-remove">
+                                                    <i class="flaticon-cancel-1"></i>
+                                                </a>
+                                                <a href="shop-details.html">
+                                                    {{-- <img src="{{ $orderItem->item_photo }}" alt=""> --}}
+                                                    <img src="#" alt="">
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                {{-- <h4><a href="#">{{ $orderItem->item_name }}</a></h4> --}}
+                                                <h4><a href="#"></a></h4>
+                                            </td>
+                                            {{-- <td class="product-quantity">{{ $orderItem->quantity }}</td> --}}
+                                            <td class="product-quantity">2</td>
+                                            <td class="product-subtotal">
+                                                {{-- <span>{{ $orderItem->current_price }}</span>ر.س --}}
+                                                <span>500</span>ر.س
+                                            </td>
+                                        </tr>
+                                        {{-- @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -174,13 +178,4 @@
 @endsection
 
 @section('js')
-    {{-- This script return the Id of each Order for Showing the Order's Items --}}
-    <script>
-        $('#exampleModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var modal = $(this)
-            modal.find('.modal-body #id').val(id);
-        })
-    </script>
 @endsection
