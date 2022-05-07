@@ -96,12 +96,12 @@
                                     <h5 class="product-title mb-3">السعر الأدنى للمنتج:
                                         <span class="h5 ms-2 text-primary">{{ $product->min_price }}$</span>
                                     </h5>
-                                    <h5 class="product-title mb-3">قيمة تناقص سعر المنتج :
+                                    {{-- <h5 class="product-title mb-3">قيمة تناقص سعر المنتج :
                                         <span class="h5 ms-2 text-primary">{{ $product->decreasing_value }}$</span>
-                                    </h5>
-                                    <h5 class="product-title mb-3">فترة عرض المنتج في الموقع :
+                                    </h5> --}}
+                                    {{-- <h5 class="product-title mb-3">فترة عرض المنتج في الموقع :
                                         <br><span class="h5 ms-2 text-primary">{{ $product->counter }}</span>
-                                    </h5>
+                                    </h5> --}}
                                     <h5 class="product-title mb-3">مدة تناقص السعر
                                         <span class="h5 ms-2 text-primary">{{ $product->minutes }}دقيقة</span>
                                     </h5>

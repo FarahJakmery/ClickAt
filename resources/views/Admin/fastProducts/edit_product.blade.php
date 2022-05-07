@@ -221,7 +221,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <label for="inputName" class="control-label">قيمة تناقص سعر المنتج</label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-text">
@@ -236,7 +236,7 @@
                                                 <span class="input-group-text">$</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div><br>
 
