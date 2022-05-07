@@ -36,10 +36,6 @@ Route::get('/', function () {
     return view('User.Auth.home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 
 // ============================ Admin Routes ============================
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -101,10 +97,9 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/Cart', [CartController::class, 'show'])->name('Cart');
     // Order Routes
     Route::resource('Orders', UserOrderController::class);
-
     // });
 
-    Route::middleware(['auth:web'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
         Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
         Route::put('/profile/{profile}', [UserController::class, 'update'])->name('updateProfile');
@@ -116,6 +111,3 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::delete('Wishlistdestroy', [WishlistController::class, 'destroy'])->name('wishlistDestroy');
     });
 });
-
-
-require __DIR__ . '/auth.php';

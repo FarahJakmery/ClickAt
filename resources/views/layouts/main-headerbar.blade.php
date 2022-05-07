@@ -316,12 +316,13 @@
                         <a class="dropdown-item" href="">
                             <i class="bx bx-slider-alt"></i> Account
                             Settings</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item" href="{{ route('admin.logout') }}"
                             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             <i class="bx bx-log-out"></i>
                             تسجيل الخروج
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                            style="display: none;">
                             @csrf
                         </form>
                     </div>
