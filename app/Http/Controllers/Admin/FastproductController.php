@@ -54,10 +54,8 @@ class FastproductController extends Controller
                 'description_en'             => ['required'],
                 'min_price'                  => ['required'],
                 'max_price'                  => ['required'],
-                'counter'                    => ['required'],
                 'minutes'                    => ['required'],
-                'quantity'                    => ['required'],
-                'decreasing_value'           => ['required'],
+                'quantity'                   => ['required'],
                 'photo_name'                 => ['required'],
                 'mcategories'                => ['required'],
                 'product_date'               => ['required'],
@@ -65,16 +63,17 @@ class FastproductController extends Controller
             ]
         );
 
-        // fetch the values
-        $startTime = Carbon::now();
-        $endTime = $request->expiry_date;
-        //
-        $datetime1 = date_create($startTime);
-        $datetime2 = date_create($endTime);
-        // find the difference between to Dates
-        $interval = date_diff($datetime1, $datetime2);
-        // formating the result
-        $counter = $interval->format('Year %y Month %m Day %d  Hours %h Minute %i Seconds %s ');
+        // // fetch the values
+        // $startTime = Carbon::now();
+        // $endTime = $request->expiry_date;
+        // //
+        // $datetime1 = date_create($startTime);
+        // $datetime2 = date_create($endTime);
+        // // find the difference between to Dates
+        // $interval = date_diff($datetime1, $datetime2);
+        // // formating the result
+        // $counter = $interval->format('Year %y Month %m Day %d  Hours %h Minute %i Seconds %s ');
+
         // Store Image
         $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product', 230, 230);
 
@@ -82,10 +81,8 @@ class FastproductController extends Controller
             'product_number'             => $request['product_number'],
             'min_price'                  => $request['min_price'],
             'max_price'                  => $request['max_price'],
-            'counter'                    => $counter,
             'minutes'                    => $request['minutes'],
             'quantity'                   => $request['quantity'],
-            'decreasing_value'           => $request['decreasing_value'],
             'product_date'               => $request['product_date'],
             'expiry_date'                => $request['expiry_date'],
             'photo_name'                 => $image_name,
@@ -152,10 +149,8 @@ class FastproductController extends Controller
                 'description_en'             => ['required'],
                 'min_price'                  => ['required'],
                 'max_price'                  => ['required'],
-                'counter'                    => ['required'],
                 'minutes'                    => ['required'],
-                'quantity'                    => ['required'],
-                'decreasing_value'           => ['required'],
+                'quantity'                   => ['required'],
                 'photo_name'                 => ['required'],
                 'mcategories'                => ['required'],
                 'product_date'               => ['required'],
@@ -172,16 +167,16 @@ class FastproductController extends Controller
             $image_name = $this->saveImage($request->file('photo_name'), 'images/Fast_Product', 230, 230);
         }
 
-        // fetch the values
-        $startTime = Carbon::now();
-        $endTime = $request->expiry_date;
-        //
-        $datetime1 = date_create($startTime);
-        $datetime2 = date_create($endTime);
-        // find the difference between to Dates
-        $interval = date_diff($datetime1, $datetime2);
-        // formating the result
-        $counter = $interval->format('Year %y Month %m Day %d  Hours %h Minute %i Seconds %s ');
+        // // fetch the values
+        // $startTime = Carbon::now();
+        // $endTime = $request->expiry_date;
+        // //
+        // $datetime1 = date_create($startTime);
+        // $datetime2 = date_create($endTime);
+        // // find the difference between to Dates
+        // $interval = date_diff($datetime1, $datetime2);
+        // // formating the result
+        // $counter = $interval->format('Year %y Month %m Day %d  Hours %h Minute %i Seconds %s ');
 
 
 
@@ -189,10 +184,8 @@ class FastproductController extends Controller
             'product_number'             => $request['product_number'],
             'min_price'                  => $request['min_price'],
             'max_price'                  => $request['max_price'],
-            'counter'                    => $counter,
             'minutes'                    => $request['minutes'],
             'quantity'                   => $request['quantity'],
-            'decreasing_value'           => $request['decreasing_value'],
             'product_date'               => $request['product_date'],
             'expiry_date'                => $request['expiry_date'],
             'photo_name'                 => $image_name,
