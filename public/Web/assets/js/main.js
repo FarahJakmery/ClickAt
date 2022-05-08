@@ -593,13 +593,13 @@ $('.popup-video').magnificPopup({
 =============================================*/
 $('.exclusive-active').imagesLoaded(function () {
 	// init Isotope
-	var $grid = $('.exclusive-active').isotope({
-		itemSelector: '.grid-item',
-		percentPosition: true,
-		masonry: {
-			columnWidth: '.grid-sizer',
-		}
-	});
+	// var $grid = $('.exclusive-active').isotope({
+	// 	itemSelector: '.grid-item',
+	// 	percentPosition: true,
+	// 	masonry: {
+	// 		columnWidth: '.grid-sizer',
+	// 	}
+	// });
 	// filter items on button click
 	$('.product-menu').on('click', 'button', function () {
 		var filterValue = $(this).attr('data-filter');

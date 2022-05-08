@@ -2275,6 +2275,19 @@ label {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+.exclusive--content--bottom a.like {
+    display: inline-block;
+    margin: 0 10px;
+    border-radius: 50%;
+    width: 25px;
+    height: 20px;
+    text-align: center;
+}
+.exclusive--content--bottom a.like.active ,
+.exclusive--content--bottom a.like:hover {
+    background-color: #0568ab;
+    color: white;
+}
 .exclusive--content--bottom span {
     font-size: 14px;
 	font-weight: 500;

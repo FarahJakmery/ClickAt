@@ -1246,7 +1246,7 @@
 	}
 }
 @media (max-width:374px) {
-	.exclusive-item-content {
+	.fast-sell-section .exclusive-item-content {
 		margin-top: -60px;
 	}
 }
