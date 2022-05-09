@@ -72,32 +72,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // ============================ Users Routes ============================
 Route::prefix('user')->name('user.')->group(function () {
 
-    Route::middleware(['guest'])->group(function () {
-        Route::view('/home', 'User.Auth.home')->name('home');
-        Route::view('/login', 'User.Auth.login')->name('login');
-        Route::post('/create', [UserController::class, 'create'])->name('create');
-        Route::post('/check', [UserController::class, 'check'])->name('check');
+    // Route::middleware(['guest'])->group(function () {
+    Route::view('/home', 'User.Auth.home')->name('home');
+    Route::view('/login', 'User.Auth.login')->name('login');
+    Route::post('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/check', [UserController::class, 'check'])->name('check');
 
-        // Main Categories Routes
-        Route::resource('mcategories', UserMcategoryController::class);
-        Route::get('MainCategory/{MainCategoryID}/fastSellingProducts', [UserMcategoryController::class, 'showAllFastSellingProductsBelogsToMainCategory'])->name('showFastProductsForMainCategory');
-        Route::get('MainCategory/{MainCategoryID}/products', [UserMcategoryController::class, 'showAllProductsBelogsToMainCategory'])->name('showProductsForMainCategory');
-        // Fast Selling Products Routes
-        Route::resource('FastSellingProducts', UserFastproductController::class);
-        // Product Routes
-        Route::resource('Products', UserProductController::class);
-        // Codes Routes
-        Route::get('Codes', [UserCodeproductController::class, 'index'])->name('Codes.index');
-        // pages Routes
-        Route::get('about', [PageController::class, 'about'])->name('about');
-        // Search Routes
-        Route::get('searchResult', [SearchController::class, 'search'])->name('search');
-        // Add To Cart
-        Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
-        Route::get('/Cart', [CartController::class, 'show'])->name('Cart');
-        // Order Routes
-        Route::resource('Orders', UserOrderController::class);
-    });
+    // Main Categories Routes
+    Route::resource('mcategories', UserMcategoryController::class);
+    Route::get('MainCategory/{MainCategoryID}/fastSellingProducts', [UserMcategoryController::class, 'showAllFastSellingProductsBelogsToMainCategory'])->name('showFastProductsForMainCategory');
+    Route::get('MainCategory/{MainCategoryID}/products', [UserMcategoryController::class, 'showAllProductsBelogsToMainCategory'])->name('showProductsForMainCategory');
+    // Fast Selling Products Routes
+    Route::resource('FastSellingProducts', UserFastproductController::class);
+    // Product Routes
+    Route::resource('Products', UserProductController::class);
+    // Codes Routes
+    Route::get('Codes', [UserCodeproductController::class, 'index'])->name('Codes.index');
+    // pages Routes
+    Route::get('about', [PageController::class, 'about'])->name('about');
+    // Search Routes
+    Route::get('searchResult', [SearchController::class, 'search'])->name('search');
+    // Add To Cart
+    Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::get('/Cart', [CartController::class, 'show'])->name('Cart');
+    // Order Routes
+    Route::resource('Orders', UserOrderController::class);
+    // });
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
