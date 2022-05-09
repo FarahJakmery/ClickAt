@@ -53,7 +53,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
-                                            @empty($Fastproducts)
+                                            @if (!$Fastproducts->isEmpty())
                                                 <div class="table-responsive-xl">
                                                     <table class="table mb-0">
                                                         <thead>
@@ -70,7 +70,8 @@
                                                             @foreach ($Fastproducts as $Fastproduct)
                                                                 <tr>
                                                                     <td class="product-thumbnail">
-                                                                        <a href="#" class="wishlist-remove removeFromwishlist1"
+                                                                        <a href="#"
+                                                                            class="wishlist-remove removeFromwishlist1"
                                                                             data-product_id="{{ $Fastproduct->id }}"
                                                                             data-type="2">
                                                                             <i class="flaticon-cancel-1"></i>
@@ -128,7 +129,7 @@
                                                                             alt="">
                                                                     </div>
                                                                     <h3>المفضلة فارغة</h3>
-                                                                    <p>لا يوجد منتجات بيع سريع مضافة للمفضلة</p>
+                                                                    <p>لا يوجد منتجات خارجية مضافة للمفضلة</p>
                                                                     <p>تسوق الآن و أضف بعض المنتجات</p>
                                                                 </div>
                                                             </div>
@@ -136,7 +137,7 @@
                                                     </div>
                                                 </section>
                                                 <!-- wishlist-area-end -->
-                                            @endempty
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +146,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
-                                            @empty($products)
+                                            @if (!$products->isEmpty())
                                                 <div class="table-responsive-xl">
                                                     <table class="table mb-0">
                                                         <thead>
@@ -160,7 +161,8 @@
                                                             @foreach ($products as $product)
                                                                 <tr>
                                                                     <td class="product-thumbnail">
-                                                                        <a href="#" class="wishlist-remove removeFromwishlist1"
+                                                                        <a href="#"
+                                                                            class="wishlist-remove removeFromwishlist1"
                                                                             data-product_id="{{ $product->id }}"
                                                                             data-type="1">
                                                                             <i class="flaticon-cancel-1"></i>
@@ -183,7 +185,8 @@
                                                                     <td class="product-add-to-cart">
                                                                         <span>أضيفت في
                                                                             {{ $product->created_at->format('Y M d') }}</span>
-                                                                        <a href="{{ $product->url }}" class="btn">
+                                                                        <a href="{{ $product->url }}"
+                                                                            class="btn">
                                                                             تسوق الآن
                                                                         </a>
                                                                     </td>
@@ -212,8 +215,7 @@
                                                     </div>
                                                 </section>
                                                 <!-- wishlist-area-end -->
-                                            @endempty
-
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

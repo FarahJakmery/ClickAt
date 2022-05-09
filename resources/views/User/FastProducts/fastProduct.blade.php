@@ -15,10 +15,10 @@
                 <ul class="nav nav-tabs mb-25" id="myTab" role="tablist">
                     @foreach ($mainCategories as $key => $mainCategory)
                         <li class="nav-item">
-                            <a class="nav-link active{{ $key == 0 ? 'active' : '' }}"
-                                id="Category{{ $mainCategory->id }}-tab" data-toggle="tab"
-                                href="#Category{{ $mainCategory->id }}" role="tab"
-                                aria-controls="Category{{ $mainCategory->id }}" aria-selected="true">
+                            <a class="nav-link {{ $key == 0 ? 'active' : '' }}" id="Category{{ $mainCategory->id }}-tab"
+                                data-toggle="tab" href="#Category{{ $mainCategory->id }}" role="tab"
+                                aria-controls="Category{{ $mainCategory->id }}"
+                                aria-selected="{{ $key == 0 ? 'true' : 'false' }}">
                                 {{ $mainCategory->translate('ar')->category_name }}
                             </a>
                         </li>
@@ -26,7 +26,7 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     @foreach ($mainCategories as $key => $mainCategory)
-                        <div class="tab-pane fade show active{{ $key == 0 ? 'active' : '' }}"
+                        <div class="tab-pane fade  {{ $key == 0 ? 'show active' : '' }}"
                             id="Category{{ $mainCategory->id }}" role="tabpanel"
                             aria-labelledby="Category{{ $mainCategory->id }}-tab">
                             <!-- exclusive-collection-area -->
