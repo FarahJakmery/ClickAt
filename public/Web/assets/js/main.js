@@ -593,13 +593,13 @@ $('.popup-video').magnificPopup({
 =============================================*/
 $('.exclusive-active').imagesLoaded(function () {
 	// init Isotope
-	// var $grid = $('.exclusive-active').isotope({
-	// 	itemSelector: '.grid-item',
-	// 	percentPosition: true,
-	// 	masonry: {
-	// 		columnWidth: '.grid-sizer',
-	// 	}
-	// });
+	var $grid = $('.exclusive-active').isotope({
+		itemSelector: '.grid-item',
+		percentPosition: true,
+		masonry: {
+			columnWidth: '.grid-sizer',
+		}
+	});
 	// filter items on button click
 	$('.product-menu').on('click', 'button', function () {
 		var filterValue = $(this).attr('data-filter');
@@ -704,7 +704,7 @@ $(".qtybutton").on("click", function () {
 			console.log(newVal)
 		}
 	} else {
-		
+
 		// Don't allow decrementing below zero
 		if (oldValue > 0) {
 			var newVal = parseFloat(oldValue) - 1;
@@ -805,7 +805,7 @@ $(".testi-avatar-info a").each(function(){
 		var copyText = $(this).siblings("#myInput");
 		console.log(copyText)
 		/* Select the text field */ /* For mobile devices */
-		
+
 		/* Copy the text inside the text field */
 		navigator.clipboard.writeText(copyText.val());
 		$(this).siblings("span.copy-messege").fadeIn(400).delay(2000).fadeOut(400)
