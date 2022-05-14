@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\McategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CodeproductController as UserCodeproductController;
 use App\Http\Controllers\User\FastproductController as UserFastproductController;
@@ -61,6 +62,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('features', FeatureController::class);
         // Order Routes
         Route::resource('orders', OrderController::class);
+        // User Routes
+        Route::resource('users', AdminUserController::class);
     });
 });
 
@@ -70,9 +73,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 // Route::view('/contact', 'pages.contact')->name('contact');
 // ============================ Users Routes ============================
-Route::prefix('user')->name('user.')->group(function () {
+Route::name('user.')->group(function () {
 
-    // Route::middleware(['guest'])->group(function () {
+
     Route::view('/home', 'User.Auth.home')->name('home');
     Route::view('/login', 'User.Auth.login')->name('login');
     Route::post('/create', [UserController::class, 'create'])->name('create');
@@ -97,7 +100,8 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/Cart', [CartController::class, 'show'])->name('Cart');
     // Order Routes
     Route::resource('Orders', UserOrderController::class);
-    // });
+    Route::get('orderItems', [UserOrderController::class, 'getOrderItems'])->name('getOrderItems');
+
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
