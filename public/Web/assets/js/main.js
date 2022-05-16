@@ -34,6 +34,10 @@ if ($('.menu-area li.dropdown ul').length) {
 	$('.menu-area .navigation li.dropdown').append('<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>');
 
 }
+if ($('.menu-area li.dropdown ul').length) {
+	$('.menu-area .navigation1 li.dropdown').append('<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>');
+
+}
 
 //Mobile Nav Hide Show
 if ($('.mobile-menu').length) {
@@ -99,6 +103,15 @@ $("[data-background]").each(function () {
 
 
 
+/*=============================================
+	=    	   Like Active  	         =
+=============================================*/
+	$('.like').each(function () {
+		$(this).on('click', function (e) {
+			e.preventDefault()
+			$(this).toggleClass('active')
+		})
+	})
 /*=============================================
 	=    	   Toggle Active  	         =
 =============================================*/
@@ -349,53 +362,113 @@ $('.brand-active').slick({
 // setTimeout(window.randomize, 200);
 // $('.ko-progress-circle').click(window.randomize);
 // Timer function ::
-
-function updateTimer() {
-	let timer=$('.data-left-time');
-	timer.each(function(){
-	var dataStart= $(this).data("start");
-	var dataEnd= $(this).data("end");
-	var future = Date.parse(dataEnd);
-	var past = Date.parse(dataStart);
-	var now = new Date();
-	var now1 = Date.parse(now);
-	var diff = future - past;
-	var left = now - past;
-	var diffCounter = future - now;
-	var leftTime = left * 100 / diff ;
-	var days = Math.floor(diffCounter / (1000 * 60 * 60 * 24));
-	var hours = Math.floor(diffCounter / (1000 * 60 * 60));
-	var mins = Math.floor(diffCounter / (1000 * 60));
-	var secs = Math.floor(diffCounter / 1000);
-	if(diffCounter > 0 ){
-		$(this).attr('data-progress', Math.floor(leftTime));
-		var D = days;
-		var H = hours - days * 24;
-		var M = mins - hours * 60;
-		var S = secs - mins * 60;
-	}else if (diffCounter <= 0) {
-		$(this).attr('data-progress', '100');
-		var D = 0;
-		var H = 0;
-		var M = 0;
-		var S = 0;
+	var temp1 = 0;
+	function counterTemp() {
+		temp1 += 1;
 	}
-	if(H < '01') {
-		if(M > '00' && S > '00'){
-			// $(this).find('.ko-progress-circle__fill').css({backgroundColor :'#ff0000'});
-			// $(this).animate({width:'286px',height:'286px',top:'+1.5px'},300);
-			// $(this).animate({width:'290px',height:'290px',top:'-1.5px'},300);
-			// $(this).animate({left:'+5px'},50);
-			// $(this).animate({left:'+5px'},50);
-			// $(this).animate({left:'-5px'},50);
-		}
-	}
-	$(this).parents(".exclusive-item").find(".coming-time").html('<div class="time-count sec"><span>'+ S +'</span>Sec</div><div class="time-count min"><span>'+ M +'</span>Min</div><div class="time-count hour"><span>'+ H +'</span>Hr</div><div class="time-count day"><span>'+ D +'</span>Day</div>');
-	})
-	};
+	setInterval(counterTemp,1000)
+	// var price = 0;
+	// let timer2=$('.data-left-time');
+	// timer2.each(function () { 
+	// 	var maxPrice = $(this).data("maxprice");
+	// 	price = maxPrice
+	// })
+	function updateTimer() {
+		let timer=$('.data-left-time');
+		timer.each(function () {
+			var maxPrice = $(this).data("maxprice");
+			var minPrice = $(this).data("minprice");
+			var currentPrice;
+			var decreasePrice = $(this).data("decreaseprice");
+			var decreseTime = parseInt($(this).data("decresetime"));
+			var thisItem = $(this).parents('.exclusive-item').find('.new-price span')
+			
+			
+			var dataStart= $(this).data("start");
+			var dataEnd= $(this).data("end");
+			var future = Date.parse(dataEnd);
+			var past = Date.parse(dataStart);
+			var now = new Date();
+			var now1 = Date.parse(now);
+			var diff = parseFloat($(this).data('diff')) * 1000 * 60 * 60;
+			var diffSecs = diff / 1000;
+			var left = now - past;
+			// console.log(diffSecs)
+			var diffCounter = future - now;
+			var leftTime = left * 100 / diff ;
+			var days = Math.floor(diffCounter / (1000 * 60 * 60 * 24));
+			var hours = Math.floor(diffCounter / (1000 * 60 * 60));
+			// Count the seconds that have passed
+			var secsPassed = Math.floor(left / (1000));
+			// Count how many groups of 20 minutes that have passed
+			var secs2 = (secsPassed / (decreseTime));
+			// floor value
+			var secs3 = Math.floor(secsPassed / (decreseTime));
+			// Subtracting these values we get rate of seconds for the current 20 minutes group
+			var secLeft = secs2 - secs3
+			// Count how many seconds that have passed in the current 20 minutes group
+			var secsCount = Math.round(decreseTime - secLeft * decreseTime);
+			// console.log(secsCount)
+			if ( temp1 == 1 ) {
+				currentPrice = (maxPrice - (secs3 * decreasePrice)).toFixed(3);
+				$(this).attr('data-currentprice', currentPrice);
+				thisItem.text(currentPrice);
+			}
+			if ( secsCount == 1 ) {
+				var currentPrice1 = parseFloat(thisItem.text());
+				// console.log(currentPrice1)
+				if ( currentPrice1 > minPrice ) {
+					currentPrice1 = (currentPrice1 - decreasePrice).toFixed(3);
+					// console.log(decreasePrice)
+					$(this).attr('data-currentprice', currentPrice1);
+					// console.log(currentPrice)
+				} else if ( currentPrice1 < minPrice ){
+					currentPrice1 = minPrice;
+				}
+				thisItem.text(currentPrice1);
+				// console.log(currentPrice)
+			}
+			// $(this).attr('data-currentprice', currentPrice);
+			var mins = Math.floor(diffCounter / (1000 * 60));
+			var secs = Math.floor(diffCounter / 1000);
+			if(diffCounter > 0 ){
+				$(this).attr('data-progress', Math.floor(leftTime));
+				var D = days;
+				var H = hours - days * 24;
+				var M = mins - hours * 60;
+				var S = secs - mins * 60;
+			}else if (diffCounter <= 0) {
+				$(this).attr('data-progress', '100');
+				var D = 0;
+				var H = 0;
+				var M = 0;
+				var S = 0;
+			}
+			$(this).parents(".exclusive-item").find(".coming-time").html('<div class="time-count sec"><span>'+ S +'</span>Sec</div><div class="time-count min"><span>'+ M +'</span>Min</div><div class="time-count hour"><span>'+ H +'</span>Hr</div><div class="time-count day"><span>'+ D +'</span>Day</div>');
+		})
+};
 	// Call timer function
 setInterval(updateTimer, 1000);
 
+	// $('.fast-sell-section .exclusive-item').each(function () {
+	// 	var thisItem = $(this)
+	// 	var itemInfo = $(this).find('.data-left-time');
+	// 	var maxPrice = itemInfo.data("maxprice");
+	// 	var minPrice = itemInfo.data("minprice");
+	// 	var decreasePrice = itemInfo.data("decreaseprice");
+	// 	var decreseTime = parseInt(itemInfo.data("decresetime"))*60*1000;
+	// 	$(this).find('.new-price span').text(maxPrice);
+	// 	var price = maxPrice
+	// 	function updatePrice() {
+	// 		if (price > minPrice) {
+	// 			price = price - decreasePrice;
+	// 		} else if (price < minPrice ){
+	// 			price = minPrice;
+	// 		}
+	// 		thisItem.find('.new-price span').text(price);
+	// 	}
+	// 	setInterval( updatePrice , 1000);
+	// })
 /*=============================================
 	=    	   Testimonial Active		    =
 =============================================*/
@@ -596,6 +669,7 @@ $('.exclusive-active').imagesLoaded(function () {
 	var $grid = $('.exclusive-active').isotope({
 		itemSelector: '.grid-item',
 		percentPosition: true,
+		originLeft: false,
 		masonry: {
 			columnWidth: '.grid-sizer',
 		}
@@ -685,6 +759,18 @@ $('.shop-details-nav').slick({
 
 
 /*=============================================
+	=    		 Search Error  	         =
+=============================================*/
+	$('.header-style-two .header-search-wrap form button').on('click', function (e) {
+		if ($('.header-style-two .header-search-wrap form input').val() === '') {
+			e.preventDefault()
+			$('#wrong-search').modal('show')
+		}
+		// console.log($('.header-style-two .header-search-wrap form .custom-select').val() )
+		// if ($('.header-style-two .header-search-wrap form .custom-select').val() === '') {
+		// }
+	})
+/*=============================================
 	=    		 Cart Active  	         =
 =============================================*/
 $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
@@ -692,24 +778,24 @@ $(".qtybutton").on("click", function () {
 	var $button = $(this);
 	var oldValue = $button.parent().find("input").val();
 	var maxValue = $button.parent().find("input").attr('max');
-	console.log(oldValue)
+	// console.log(oldValue)
 	console.log(maxValue)
 	if ($button.text() == "+") {
 		// Don't allow incrementing more than Max value
 		if (oldValue < parseInt(maxValue) ) {
-			var newVal = parseFloat(oldValue) + 1;
-			console.log(newVal)
+			// console.log(newVal)
+			var newVal = parseInt(oldValue) + 1;
 		} else {
 			newVal = maxValue;
-			console.log(newVal)
 		}
 	} else {
-
+		
 		// Don't allow decrementing below zero
-		if (oldValue > 0) {
-			var newVal = parseFloat(oldValue) - 1;
+		if (oldValue > 1) {
+			var newVal = parseInt(oldValue) - 1;
+			// console.log(newVal)
 		} else {
-			newVal = 0;
+			newVal = 1;
 		}
 	}
 	$button.parent().find("input").val(newVal);
@@ -805,7 +891,7 @@ $(".testi-avatar-info a").each(function(){
 		var copyText = $(this).siblings("#myInput");
 		console.log(copyText)
 		/* Select the text field */ /* For mobile devices */
-
+		
 		/* Copy the text inside the text field */
 		navigator.clipboard.writeText(copyText.val());
 		$(this).siblings("span.copy-messege").fadeIn(400).delay(2000).fadeOut(400)
