@@ -129,12 +129,10 @@
 
                                         <ul class="minicart">
                                             @if (count($array['fastProduct_detailss']) == 0)
-                                                <li class="d-flex align-items-start">
-
-                                                    <p>
-                                                        لا يوجد منتجات مضافة إلى السلة
-                                                    </p>
-
+                                                <li class="empty-cart">
+                                                    <img src="{{ URL::asset('Web/assets/img/icon/cart.png') }}"
+                                                        alt="empty-cart">
+                                                    <p>لا يوجد منتجات مضافة الى العربة</p>
                                                 </li>
                                             @endif
                                             @foreach ($array['fastProduct_detailss'] as $fastProducts)
@@ -361,3 +359,23 @@
 
 </header>
 <!-- header-area-end -->
+
+<!-- Modal -->
+<div class="modal fade" id="wrong-search" tabindex="-1" aria-labelledby="wrongSearchLabel" aria-hidden="true">
+    <div class="modal-dialog width-fitcontent">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="wrongSearchLabel">خطأ في البحث</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                أدخل كلمة أو جملة بمربع البحث
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+</div>
