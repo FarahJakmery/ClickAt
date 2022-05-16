@@ -15,6 +15,7 @@ use App\Http\Controllers\User\FastproductController as UserFastproductController
 use App\Http\Controllers\User\McategoryController as UserMcategoryController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\PageController;
+use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\UserController;
@@ -108,8 +109,8 @@ Route::name('user.')->group(function () {
     // Order Routes
     Route::resource('Orders', UserOrderController::class);
     Route::get('orderItems', [UserOrderController::class, 'getOrderItems'])->name('getOrderItems');
-
-
+    // Payment Routes
+    Route::get('Payment_Page', [PaymentController::class, 'getPaymentPage'])->name('getPaymentPage');
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
         Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
