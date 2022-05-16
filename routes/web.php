@@ -50,7 +50,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Authentication Routes
         Route::view('/home', 'Admin.dashboard')->name('home');
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-
+        // Admin Routes
+        Route::resource('admins', AdminController::class);
         //
         Route::resource('mcategories', McategoryController::class);
         Route::resource('fastSellingProduct', FastproductController::class);
@@ -62,6 +63,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('features', FeatureController::class);
         // Order Routes
         Route::resource('orders', OrderController::class);
+        // Order types Routes
+        Route::get('/paying', [OrderController::class, 'paying_order']);
+        Route::get('/wait_shimp', [OrderController::class, 'wait_shimp']);
+        Route::get('/shimp', [OrderController::class, 'shimp']);
+        Route::get('/done', [OrderController::class, 'done']);
+        Route::get('/canceled', [OrderController::class, 'canceled']);
         // User Routes
         Route::resource('users', AdminUserController::class);
     });
