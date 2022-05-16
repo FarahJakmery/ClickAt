@@ -64,7 +64,7 @@ class CodeproductController extends Controller
         Codeproduct::create($data);
 
         session()->flash('Add', 'تم إضافة المنتج بنجاح');
-        return redirect('/productWithCode');
+        return redirect('/admin/productWithCode');
     }
 
     /**
@@ -117,7 +117,7 @@ class CodeproductController extends Controller
         $code->update($data);
 
         session()->flash('edit', 'تم تعديل المنتج بنجاح');
-        return redirect('/productWithCode');
+        return redirect('/admin/productWithCode');
     }
 
     /**
@@ -136,6 +136,6 @@ class CodeproductController extends Controller
         }
         $code->delete();
         session()->flash('delete', 'تم حذف المنتج بنجاح');
-        return redirect('/productWithCode');
+        return redirect('/admin/productWithCode');
     }
 }

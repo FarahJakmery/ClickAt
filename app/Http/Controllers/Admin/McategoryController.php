@@ -119,7 +119,7 @@ class McategoryController extends Controller
 
         $mcategory->update($data);
         session()->flash('edit', 'تم تعديل التصنيف الرئيسي بنجاح');
-        return redirect('/mcategories');
+        return redirect('/admin/mcategories');
     }
 
     /**
@@ -138,6 +138,6 @@ class McategoryController extends Controller
         }
         $Mcate->delete();
         session()->flash('delete', 'تم حذف التصنيف الرئيسي بنجاح');
-        return redirect('/mcategories');
+        return redirect('/admin/mcategories');
     }
 }

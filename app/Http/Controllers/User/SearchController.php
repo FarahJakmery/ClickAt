@@ -44,8 +44,7 @@ class SearchController extends Controller
         }
         //
         elseif ($request->searchWord == null && $request->mainCategoryId == "null") {
-
-            return view('User.Search.searchResults');
+            return redirect('/home');
         }
     }
 }
