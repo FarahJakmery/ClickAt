@@ -1,4 +1,4 @@
-@extends('webLayouts.master')
+@extends('weblayouts.master')
 
 @section('web_title')
     المفضلة
