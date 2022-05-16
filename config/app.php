@@ -176,6 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Paytabscom\Laravel_paytabs\PaypageServiceProvider::class,
     ],
 
     /*
