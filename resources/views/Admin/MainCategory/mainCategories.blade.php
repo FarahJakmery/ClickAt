@@ -44,11 +44,18 @@
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
-        <div class="my-auto">
-            <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">التصنيفات</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
-                    التصنيفات الرئيسية</span>
+        <div class="left-content">
+            <div class="my-auto">
+                <div class="d-flex">
+                    <h4 class="content-title mb-0 my-auto">التصنيفات</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
+                        التصنيفات الرئيسية</span>
+                </div>
             </div>
+        </div>
+        {{-- Add Product with code Button --}}
+        <div class="main-dashboard-header-right">
+            <a class="modal-effect btn btn-primary btn-block" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal"
+                href="#modaldemo8">إضافة تصنيف رئيسي</a>
         </div>
     </div>
     <!-- breadcrumb -->
@@ -98,15 +105,6 @@
         <!--Bordered Table-->
         <div class="col-xl-12">
             <div class="card mg-b-20">
-                {{-- card-header --}}
-                <div class="card-header pb-0">
-                    {{-- Add Main Category Button --}}
-                    <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20">
-                        <a class="modal-effect btn btn-outline-primary btn-block" data-bs-effect="effect-flip-vertical"
-                            data-bs-toggle="modal" href="#modaldemo8">إضافة تصنيف رئيسي</a>
-                    </div>
-                </div>
-
                 {{-- card-body --}}
                 <div class="card-body">
                     <div class="table-responsive">

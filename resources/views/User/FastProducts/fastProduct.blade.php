@@ -44,7 +44,7 @@
 
                                     {{-- The Products Items --}}
                                     <div class="row justify-content-center">
-                                        @foreach ($mainCategory->fastproducts as $fastproduct)
+                                        @foreach ($mainCategory->fastproducts()->paginate(1, ['*'], 'fastProduct') as $fastproduct)
                                             <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
                                                 <div class="exclusive-item exclusive-item-three text-center mb-40">
                                                     <div class="exclusive-item-thumb circle-shape">
@@ -94,19 +94,58 @@
                                                                 {{ $fastproduct->translate('ar')->description }}
                                                             </p>
                                                         </div>
-                                                        {{-- Add To Cart Button & Quantity --}}
-                                                        <div class="add-to-cart">
-                                                            <form action="#">
-                                                                <div class="cart-plus-minus">
-                                                                    <input type="text" name="quantity" id="quantity"
-                                                                        value="1" max="{{ $fastproduct->quantity }}">
-                                                                </div>
-                                                                <button class="btn addToCart"
-                                                                    data-product_id="{{ $fastproduct->id }}">
-                                                                    <i class="flaticon-supermarket"></i>
-                                                                </button>
-                                                            </form>
+
+                                                        {{-- Add To WishList Button --}}
+                                                        <div class="add-to-wishlist addtowishlist">
+                                                            <a href="#" class="like"
+                                                                data-product_id="{{ $fastproduct->id }}">
+                                                                <i class="flaticon-heart"></i>
+                                                            </a>
                                                         </div>
+
+                                                        {{-- Add To Cart Button & Quantity --}}
+                                                        @if (!Auth::user() == null)
+                                                            @if (\App\Models\Cart::where('product_id', '=', $fastproduct->id)->where('user_id', '=', Auth::user()->id)->exists())
+                                                                <div class="in-cart">
+                                                                    <p>هذا المنتج موجود مسبقاً في العربة</p>
+                                                                </div>
+                                                            @else
+                                                                <div class="add-to-cart">
+                                                                    <form action="#">
+                                                                        <div class="cart-plus-minus">
+                                                                            <input type="text" name="quantity" id="quantity"
+                                                                                value="1"
+                                                                                max="{{ $fastproduct->quantity }}">
+                                                                        </div>
+                                                                        <button class="btn addToCart"
+                                                                            data-product_id="{{ $fastproduct->id }}">
+                                                                            <i class="flaticon-supermarket"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            @if (Cookie::get($fastproduct->id) !== null)
+                                                                <div class="in-cart">
+                                                                    <p>هذا المنتج موجود مسبقاً في العربة</p>
+                                                                </div>
+                                                            @else
+                                                                <div class="add-to-cart">
+                                                                    <form action="#">
+                                                                        <div class="cart-plus-minus">
+                                                                            <input type="text" name="quantity" id="quantity"
+                                                                                value="1"
+                                                                                max="{{ $fastproduct->quantity }}">
+                                                                        </div>
+                                                                        <button class="btn addToCart"
+                                                                            data-product_id="{{ $fastproduct->id }}">
+                                                                            <i class="flaticon-supermarket"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+
                                                     </div>
                                                     {{-- Timer --}}
                                                     <div class="viewed-offer-time">
@@ -121,66 +160,26 @@
                                         @endforeach
                                     </div>
 
-                                    {{-- Pagination --}}
-                                    <div class="pagination-wrap">
-                                        <ul>
-                                            <li class="prev">
-                                                <a href="#">
-                                                    <i class="fas fa-long-arrow-alt-right"></i>
-                                                    السابق
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">1
-                                                </a>
-                                            </li>
-                                            <li class="active">
-                                                <a href="#">2
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">3
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">4
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">...
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">10
-                                                </a>
-                                            </li>
-                                            <li class="next">
-                                                <a href="#">التالي
-                                                    <i class="fas fa-long-arrow-alt-left"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </section>
                             <!-- exclusive-collection-area-end -->
                         </div>
+                        {{ $mainCategory->fastproducts()->paginate(1, ['*'], 'fastProduct')->links() }}
                     @endforeach
                 </div>
             </div>
         </div>
     </section>
     <!-- exclusive-collection-area-end -->
-    {{-- {{ $mainCategories->links() }} --}}
 @endsection
 
 @section('js')
     {{-- This Script Is To Add To Cart --}}
     <script>
         $(document).ready(function() {
-            $('.addToCart').each(function(ele) {
-                $(this).on('click', function(ele) {
-                    ele.preventDefault();
+            $('.addToCart').each(function() {
+                $(this).on('click', function(e) {
+                    e.preventDefault();
 
                     $.ajaxSetup({
                         headers: {
@@ -190,15 +189,15 @@
 
                     var productId = $(this).data('product_id');
                     var quantity = $(this).siblings().find('input').val();
-                    var maxPrice = $(this).parents('.add-to-cart').siblings().find('.max_price')
-                        .val();
+                    var maxPrice = $(this).parents('.add-to-cart').siblings().find(
+                        '.new-price span').text();
                     console.log(productId);
                     console.log(quantity);
                     console.log(maxPrice);
 
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('user.addToCart') }}",
+                        url: "{{ route('addToCart') }}",
                         data: {
                             product_id: productId,
                             quantity: quantity,
@@ -207,13 +206,26 @@
                         dataType: "json",
                         success: function(response) {
                             console.log(response);
-
+                            console.log(data);
+                            var countFirstEle = $(
+                                '.header-shop-cart:first a span.cart-count')
+                            var countAll = $('.header-shop-cart a span.cart-count')
+                            // console.log(count.text())
+                            // console.log(parseInt(count.text()) + parseInt(quantity))
+                            var cartQuantity = parseInt(countFirstEle.text()) +
+                                parseInt(quantity);
+                            // if (cartQuantity > 99){
+                            //     countAll.text("+99")
+                            //     countAll.css({width : '27px'})
+                            // }else{
+                            countAll.text(parseInt(countFirstEle.text()) + parseInt(
+                                quantity))
+                            // }
                         }
                     });
-                    console.log(data);
+
                 });
             })
-
         });
     </script>
 
@@ -232,7 +244,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/wishlist",
+                    url: "{{ route('user.AddFastProductToWishlist') }}",
                     data: {
                         'productId': $(this).attr('data-product_id'),
                     },

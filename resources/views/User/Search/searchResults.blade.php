@@ -53,35 +53,31 @@
                                     <div class="row justify-content-center">
                                         <div class="col-lg-12">
                                             <div class="row exclusive-active">
-                                                @isset($products)
-                                                    @foreach ($products as $product)
-                                                        <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
-                                                            <div class="exclusive-item mb-40">
-                                                                <div class="exclusive-item-thumb exclusive-item-three"
-                                                                    data-date="48:00:00">
-                                                                    <a href="shop-details.html">
-                                                                        <img src="{{ asset($product->photo_name) }}" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="exclusive-item-content">
-                                                                    <div class="exclusive--content--bottom">
-                                                                        <h5>
-                                                                            <a href="shop-details.html">
-                                                                                {{ $product->translate('ar')->product_name }}
-                                                                            </a>
-                                                                        </h5>
-                                                                        <a href="#">
-                                                                            <i class="flaticon-heart"></i>
+                                                @forelse ($products as $product)
+                                                    <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
+                                                        <div class="exclusive-item mb-40">
+                                                            <div class="exclusive-item-thumb exclusive-item-three"
+                                                                data-date="48:00:00">
+                                                                <a href="shop-details.html">
+                                                                    <img src="{{ asset($product->photo_name) }}" alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="exclusive-item-content">
+                                                                <div class="exclusive--content--bottom">
+                                                                    <h5>
+                                                                        <a href="shop-details.html">
+                                                                            {{ $product->translate('ar')->product_name }}
                                                                         </a>
-                                                                        <span>{{ $product->price }}ر.س</span>
-                                                                    </div>
+                                                                    </h5>
+                                                                    <a href="#">
+                                                                        <i class="flaticon-heart"></i>
+                                                                    </a>
+                                                                    <span>{{ $product->price }}ر.س</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    @endforeach
-                                                @endisset
-
-                                                @empty($products)
+                                                    </div>
+                                                @empty
                                                     <!-- search-area -->
                                                     <section class="search-area pt-100 pb-100">
                                                         <!-- <section class="wishlist-area pt-100 pb-100"> -->
@@ -94,7 +90,7 @@
                                                                                 alt="">
                                                                         </div>
                                                                         <h3>لا يوجد نتائج بحث</h3>
-                                                                        <p>قد يكون العنص غير موجود او هناك خطأ في البحث</p>
+                                                                        <p>قد يكون العنصر غير موجود او هناك خطأ في البحث</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -102,108 +98,104 @@
                                                         <!-- </section> -->
                                                     </section>
                                                     <!-- search-area-end -->
-                                                @endempty
+                                                @endforelse
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="pagination-wrap">
-                                        <ul>
-                                            <li class="prev">
-                                                <a href="#"><i class="fas fa-long-arrow-alt-right"></i> السابق</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">1</a>
-                                            </li>
-                                            <li class="active">
-                                                <a href="#">2</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">3</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">4</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">...</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">10</a>
-                                            </li>
-                                            <li class="next">
-                                                <a href="#">التالي <i class="fas fa-long-arrow-alt-left"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <!--{{-- <div class="pagination-wrap">-->
+                                    <!--    <ul>-->
+                                    <!--        <li class="prev">-->
+                                    <!--            <a href="#"><i class="fas fa-long-arrow-alt-right"></i> السابق</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li>-->
+                                    <!--            <a href="#">1</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li class="active">-->
+                                    <!--            <a href="#">2</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li>-->
+                                    <!--            <a href="#">3</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li>-->
+                                    <!--            <a href="#">4</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li>-->
+                                    <!--            <a href="#">...</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li>-->
+                                    <!--            <a href="#">10</a>-->
+                                    <!--        </li>-->
+                                    <!--        <li class="next">-->
+                                    <!--            <a href="#">التالي <i class="fas fa-long-arrow-alt-left"></i></a>-->
+                                    <!--        </li>-->
+                                    <!--    </ul>-->
+                                    <!--</div> --}}-->
                                 </div>
                             </div>
                             {{-- Fast Prodcts --}}
                             <div class="tab-pane fade" id="val" role="tabpanel" aria-labelledby="val-tab">
                                 <div class="container">
                                     <div class="row justify-content-center">
-                                        @isset($fastProducts)
-                                            @foreach ($fastProducts as $fastProduct)
-                                                <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
-                                                    <div class="exclusive-item exclusive-item-three text-center mb-40">
-                                                        <div class="exclusive-item-thumb circle-shape">
-                                                            <div class="ko-progress-circle data-left-time" data-progress="0"
-                                                                data-end="mar 28, 2022 18:20:00"
-                                                                data-start="mar 28, 2022 10:30:00">
-                                                                <div class="ko-circle">
-                                                                    <div class="full ko-progress-circle__slice">
-                                                                        <div class="ko-progress-circle__fill"></div>
-                                                                    </div>
-                                                                    <div class="ko-progress-circle__slice">
-                                                                        <div class="ko-progress-circle__fill"></div>
-                                                                        <div
-                                                                            class="ko-progress-circle__fill ko-progress-circle__bar">
-                                                                        </div>
-                                                                    </div>
+                                        @forelse ($fastProducts as $fastProduct)
+                                            <div class="col-lg-4 col-sm-6 grid-item grid-sizer cat-two cat-three">
+                                                <div class="exclusive-item exclusive-item-three text-center mb-40">
+                                                    <div class="exclusive-item-thumb circle-shape">
+                                                        <div class="ko-progress-circle data-left-time" data-progress="0"
+                                                            data-end="mar 28, 2022 18:20:00"
+                                                            data-start="mar 28, 2022 10:30:00">
+                                                            <div class="ko-circle">
+                                                                <div class="full ko-progress-circle__slice">
+                                                                    <div class="ko-progress-circle__fill"></div>
                                                                 </div>
-                                                                <div class="ko-progress-circle__overlay">
+                                                                <div class="ko-progress-circle__slice">
+                                                                    <div class="ko-progress-circle__fill"></div>
                                                                     <div
-                                                                        class="most--popular--item--thumb height-100 circle-shape">
-                                                                        <a href="#">
-                                                                            <img src="{{ asset($fastProduct->photo_name) }}"
-                                                                                alt="">
-                                                                        </a>
+                                                                        class="ko-progress-circle__fill ko-progress-circle__bar">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="exclusive-item-content">
-                                                            <h5>
-                                                                <a href="shop-details.html">
-                                                                    {{ $fastProduct->translate('ar')->name }}
-                                                                </a>
-                                                            </h5>
-                                                            <div class="exclusive--item--price">
-                                                                <span class="new-price">
-                                                                    {{ $fastProduct->max_price }}ر.س
-                                                                </span>
+                                                            <div class="ko-progress-circle__overlay">
+                                                                <div
+                                                                    class="most--popular--item--thumb height-100 circle-shape">
+                                                                    <a href="#">
+                                                                        <img src="{{ asset($fastProduct->photo_name) }}"
+                                                                            alt="">
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                            <div class="add-to-cart">
-                                                                <form action="#">
-                                                                    <div class="cart-plus-minus">
-                                                                        <input type="text"
-                                                                            value="{{ $fastProduct->quantity }}">
-                                                                    </div>
-                                                                    <button class="btn">
-                                                                        <i class="flaticon-supermarket"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <div class="viewed-offer-time">
-                                                            <p><span>أسرع بالشراء </span>عرض لمدة محدودة</p>
-                                                            <div class="coming-time" data-countdown="2020/9/15"></div>
                                                         </div>
                                                     </div>
+                                                    <div class="exclusive-item-content">
+                                                        <h5>
+                                                            <a href="shop-details.html">
+                                                                {{ $fastProduct->translate('ar')->name }}
+                                                            </a>
+                                                        </h5>
+                                                        <div class="exclusive--item--price">
+                                                            <span class="new-price">
+                                                                {{ $fastProduct->max_price }}ر.س
+                                                            </span>
+                                                        </div>
+                                                        <div class="add-to-cart">
+                                                            <form action="#">
+                                                                <div class="cart-plus-minus">
+                                                                    <input type="text"
+                                                                        value="{{ $fastProduct->quantity }}">
+                                                                </div>
+                                                                <button class="btn">
+                                                                    <i class="flaticon-supermarket"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="viewed-offer-time">
+                                                        <p><span>أسرع بالشراء </span>عرض لمدة محدودة</p>
+                                                        <div class="coming-time" data-countdown="2020/9/15"></div>
+                                                    </div>
                                                 </div>
-                                            @endforeach
-                                        @endisset
-
-                                        @empty($records)
+                                            </div>
+                                        @empty
                                             <!-- search-area -->
                                             <section class="search-area pt-100 pb-100">
                                                 <!-- <section class="wishlist-area pt-100 pb-100"> -->
@@ -224,22 +216,22 @@
                                                 <!-- </section> -->
                                             </section>
                                             <!-- search-area-end -->
-                                        @endempty
+                                        @endforelse
                                     </div>
-                                    <div class="pagination-wrap">
-                                        <ul>
-                                            <li class="prev"><a href="#"><i
-                                                        class="fas fa-long-arrow-alt-right"></i> السابق</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li class="active"><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">...</a></li>
-                                            <li><a href="#">10</a></li>
-                                            <li class="next"><a href="#">التالي <i
-                                                        class="fas fa-long-arrow-alt-left"></i></a></li>
-                                        </ul>
-                                    </div>
+                                    <!--{{-- <div class="pagination-wrap">-->
+                                    <!--    <ul>-->
+                                    <!--        <li class="prev"><a href="#"><i-->
+                                    <!--                    class="fas fa-long-arrow-alt-right"></i> السابق</a></li>-->
+                                    <!--        <li><a href="#">1</a></li>-->
+                                    <!--        <li class="active"><a href="#">2</a></li>-->
+                                    <!--        <li><a href="#">3</a></li>-->
+                                    <!--        <li><a href="#">4</a></li>-->
+                                    <!--        <li><a href="#">...</a></li>-->
+                                    <!--        <li><a href="#">10</a></li>-->
+                                    <!--        <li class="next"><a href="#">التالي <i-->
+                                    <!--                    class="fas fa-long-arrow-alt-left"></i></a></li>-->
+                                    <!--    </ul>-->
+                                    <!--</div> --}}-->
                                 </div>
                             </div>
                         </div>

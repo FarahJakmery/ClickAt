@@ -60,8 +60,8 @@
                                         class="{{ Route::currentRouteName() == 'user.Codes.index' ? 'active' : '' }}">
                                         <a href="{{ route('user.Codes.index') }}">أكواد كليكات</a>
                                     </li>
-                                    <li class="{{ Route::currentRouteName() == '#' ? 'active' : '' }}">
-                                        <a href="#">تواصل معنا</a>
+                                    <li class="{{ Route::currentRouteName() == 'user.contact' ? 'active' : '' }}">
+                                        <a href="{{ route('user.contact') }}">تواصل معنا</a>
                                     </li>
                                 </ul>
                             </div>
@@ -94,7 +94,7 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item"
                                                     href="{{ route('user.editProfile', Auth::user()->id) }}">
-                                                    {{ Auth::user()->name }}
+                                                    {{ Auth::user()->first_name }}
                                                 </a>
                                                 <a class="dropdown-item" href="{{ route('user.logout') }}"
                                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -123,9 +123,6 @@
                                             <span class="cart-count">{{ $array['count_items'] }}</span>
                                         </a>
 
-                                        <span class="cart-total-price">
-                                            <span>{{ $array['price_for_all_thing'] }}</span>ر.س
-                                        </span>
 
                                         <ul class="minicart">
                                             @if (count($array['fastProduct_detailss']) == 0)
@@ -150,14 +147,16 @@
                                                         </h4>
                                                         <div class="cart-price">
                                                             <span class="new">
-                                                                <span>229.9</span>ر.س</span>
+                                                                <span>{{ number_format($fastProducts['price']) }}</span>
+                                                                ر.س
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <div class="del-icon">
-                                                        <a href="#">
-                                                            <i class="far fa-trash-alt"></i>
-                                                        </a>
-                                                    </div>
+                                                    <!--<div class="del-icon">-->
+                                                    <!--    <a href="#"class="removeFromCart" data-product_id="{{ $fastProducts['fast_product']->id }}">-->
+                                                    <!--        <i class="far fa-trash-alt"></i>-->
+                                                    <!--    </a>-->
+                                                    <!--</div>-->
                                                 </li>
                                             @endforeach
 
@@ -165,7 +164,8 @@
                                                 <div class="total-price">
                                                     <span class="f-left">المجموع:</span>
                                                     <span class="f-right">
-                                                        <span>{{ $array['price_for_all_thing'] }}</span>ر.س
+                                                        <span>{{ number_format($array['price_for_all_thing']) }}</span>
+                                                        ر.س
                                                     </span>
                                                 </div>
                                             </li>
@@ -173,7 +173,8 @@
                                             <li>
                                                 <div class="checkout-link">
                                                     <a href="{{ route('user.Cart') }}">حقيبة التسوق</a>
-                                                    <a class="red-color" href="#">الدفع</a>
+                                                    <a class="red-color"
+                                                        href="{{ route('user.getPaymentPage') }}">الدفع</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -219,16 +220,20 @@
                                     @endif
 
                                     @if (!Auth::guest())
-                                        <a href="{{ route('user.editProfile', Auth::user()->id) }}">
-                                            <span><i class="flaticon-user"></i></span>
-                                            <span class="text">حسابي</span>
-                                        </a>
-                                        <li>
-                                            <a href="{{ route('user.logout') }}"
-                                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        <li class="dropdown">
+                                            <a href="{{ route('user.editProfile', Auth::user()->id) }}">
                                                 <span><i class="flaticon-user"></i></span>
-                                                <span class="text">تسجيل خروج</span>
+                                                <span class="text">حسابي</span>
                                             </a>
+                                            <ul class="submenu">
+                                                <li>
+                                                    <a href="{{ route('user.logout') }}"
+                                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                        <span><i class="flaticon-user"></i></span>
+                                                        <span class="text">تسجيل خروج</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
 
                                         <li>
@@ -243,7 +248,7 @@
                                         <a href="{{ route('user.Cart') }}">
                                             <span>
                                                 <i class="flaticon-shopping-bag"></i>
-                                                {{-- <span class="cart-count">2</span> --}}
+                                                <span class="cart-count">{{ $array['count_items'] }}</span>
                                             </span>
                                             <span class="text">العربة</span>
                                         </a>
@@ -360,22 +365,33 @@
 </header>
 <!-- header-area-end -->
 
-<!-- Modal -->
-<div class="modal fade" id="wrong-search" tabindex="-1" aria-labelledby="wrongSearchLabel" aria-hidden="true">
-    <div class="modal-dialog width-fitcontent">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="wrongSearchLabel">خطأ في البحث</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                أدخل كلمة أو جملة بمربع البحث
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+
+            $(document).on('click', '.removeFromCart', function(e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "delete",
+                    url: "{{ route('user.removeFromCart') }}",
+                    data: {
+                        'product_id': $(this).attr('data-product_id'),
+                    },
+                    success: function(data) {
+                        location.reload();
+                    }
+                });
+
+            });
+
+        });
+    </script>
+@endsection

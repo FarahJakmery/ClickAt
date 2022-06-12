@@ -132,7 +132,7 @@
                                         <td>
                                             <ul>
                                                 @foreach ($product->maincategories as $maincategory)
-                                                    <li>{{ $maincategory->translate('en')->category_name }}</li>
+                                                    <li>{{ $maincategory->translate('ar')->category_name }}</li>
                                                 @endforeach
                                             </ul>
                                         </td>
@@ -234,7 +234,7 @@
                                             </div>
 
                                             {{-- حقل اختيار التصنيفات الرئيسية التابع لها المنتج --}}
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label for="exampleFormControlTextarea1"><b>التصنيفات الرئيسية</b></label>
                                                 <select multiple="multiple" class="testselect2" name="mcategories[]"
                                                     id="mcategories[]" required>
@@ -244,6 +244,38 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                            </div> --}}
+
+                                            <div class="container">
+                                                <!-- row opened -->
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div>
+                                                                    <h6 class="card-title mb-1">Multiple Select Styles</h6>
+                                                                    <p class="text-muted card-sub-title">First import a
+                                                                        latest version of jquery in your
+                                                                        page. Then the jquery.sumoselect.min.js and its css
+                                                                        (sumoselect.css)</p>
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <label for="exampleFormControlTextarea1"><b>التصنيفات
+                                                                            الرئيسية</b></label>
+                                                                    <select multiple="multiple" class="selectsum2"
+                                                                        name="mcategories[]" id="mcategories[]" required>
+                                                                        @foreach ($MCates as $MCate)
+                                                                            <option value="{{ $MCate->id }}">
+                                                                                {{ $MCate->translate('en')->category_name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
                                             </div>
 
                                             {{-- حقل اختيار الصورة الخاصة بالمنتج --}}

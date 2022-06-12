@@ -10,7 +10,6 @@
 
     <!--- Animations css-->
     <link href="{{ URL::asset('assets/css/animate.css') }}" rel="stylesheet">
-
     <!---Internal Owl Carousel css-->
     <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
 
@@ -24,7 +23,7 @@
     <link href="{{ URL::asset('assets/css/animate.css') }}" rel="stylesheet">
 @endsection
 @section('title')
-    سجل الطلبات
+    الطلبات بانتظار الشحن
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -33,7 +32,7 @@
             <div class="my-auto">
                 <div class="d-flex">
                     <h4 class="content-title mb-0 my-auto">الطلبات</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
-                        سجل الطلبات</span>
+                        الطلبات بانتظار الشحن</span>
                 </div>
             </div>
         </div>
@@ -96,7 +95,7 @@
                                     <th class="border-bottom-0">التكلفة الإجمالية</th>
                                     <th class="border-bottom-0">حالة الطلب</th>
                                     <th class="border-bottom-0">تفاصيل الطلب</th>
-                                    <th class="border-bottom-0">العمليات</th>
+                                    <th class="border-bottom-0">الخيارات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,7 +174,6 @@
             </div>
         </div>
         <!--/div-->
-
 
         <!-- Modal effects -->
         <div class="modal fade" id="modaldemo8">

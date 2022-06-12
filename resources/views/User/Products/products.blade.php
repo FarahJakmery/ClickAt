@@ -22,10 +22,11 @@
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
                     <div class="product-menu mb-60">
-                        <button class="active" data-filter="*">أفضل المبيعات</button>
-                        @foreach ($mainCategories as $mainCategory)
-                            <button class=""
-                                data-filter=".cat-{{ $mainCategory->id }}">{{ $mainCategory->translate('ar')->category_name }}</button>
+                        {{-- <button class="active" data-filter="*">أفضل المبيعات</button> --}}
+                        @foreach ($mainCategories as $key => $mainCategory)
+                            <button class="{{ $key == 0 ? 'active' : '' }}" data-filter=".cat-{{ $mainCategory->id }}">
+                                {{ $mainCategory->translate('ar')->category_name }}
+                            </button>
                         @endforeach
                     </div>
                 </div>
@@ -49,9 +50,24 @@
                                                         {{ $product->translate('ar')->product_name }}
                                                     </a>
                                                 </h5>
-                                                <a href="#" class="addtowishlist" data-product_id="{{ $product->id }}">
-                                                    <i class="flaticon-heart"></i>
-                                                </a>
+                                                @if (Auth::user() == null)
+                                                    <a href="#" class="like addtowishlist"
+                                                        data-product_id="{{ $product->id }}">
+                                                        <i class="flaticon-heart"></i>
+                                                    </a>
+                                                @else
+                                                    @if (DB::table('product_wishlist')->where('product_id', $product->id)->where('user_id', Auth::user()->id)->exists())
+                                                        <a href="#" class="like active addtowishlist"
+                                                            data-product_id="{{ $product->id }}">
+                                                            <i class="flaticon-heart"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="#" class="like  addtowishlist"
+                                                            data-product_id="{{ $product->id }}">
+                                                            <i class="flaticon-heart"></i>
+                                                        </a>
+                                                    @endif
+                                                @endif
                                                 <span>{{ $product->price }}ر.س</span>
                                             </div>
                                             <div class="exclusive--content--description">
@@ -109,6 +125,7 @@
                     dataType: "json",
                     success: function(response) {
                         console.log(response);
+
                     }
                 });
             });

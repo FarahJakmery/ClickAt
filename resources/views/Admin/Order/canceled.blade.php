@@ -24,7 +24,7 @@
     <link href="{{ URL::asset('assets/css/animate.css') }}" rel="stylesheet">
 @endsection
 @section('title')
-    سجل الطلبات
+    الطلبات الملغية
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -33,7 +33,7 @@
             <div class="my-auto">
                 <div class="d-flex">
                     <h4 class="content-title mb-0 my-auto">الطلبات</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/
-                        سجل الطلبات</span>
+                        الطلبات الملغية</span>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                                     <th class="border-bottom-0">التكلفة الإجمالية</th>
                                     <th class="border-bottom-0">حالة الطلب</th>
                                     <th class="border-bottom-0">تفاصيل الطلب</th>
-                                    <th class="border-bottom-0">العمليات</th>
+                                    <th class="border-bottom-0">الخيارات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,7 +108,13 @@
                                         <td>{{ $order->user->name }}</td>
                                         <td>{{ $order->total_price }}</td>
                                         <td>
-                                            @if ($order->order_status == 'paying')
+                                            @if ($order->order_status == 'Unpaid')
+                                                <h4 class="text-secondary">
+                                                    <span class="badge bg-secondary">
+                                                        غير مدفوع
+                                                    </span>
+                                                </h4>>
+                                            @elseif ($order->order_status == 'paid')
                                                 <h4 class="text-info">
                                                     <span class="badge bg-info">
                                                         مدفوع
@@ -132,7 +138,7 @@
                                                         تم التسليم
                                                     </span>
                                                 </h4>
-                                            @else
+                                            @elseif ($order->order_status == 'canceled')
                                                 <h4 class="text-danger">
                                                     <span class="badge bg-danger">
                                                         ملغي
@@ -175,7 +181,6 @@
             </div>
         </div>
         <!--/div-->
-
 
         <!-- Modal effects -->
         <div class="modal fade" id="modaldemo8">
@@ -235,7 +240,6 @@
             </div>
         </div>
         <!-- End Modal effects-->
-
         <!-- Delete order -->
         <div class="modal fade" id="DeleteModal">
             <div class="modal-dialog" role="document">

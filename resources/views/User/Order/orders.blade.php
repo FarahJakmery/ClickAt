@@ -42,7 +42,9 @@
                             <div class="contact-info-box text-center mb-30">
                                 <div class="contact-info-content">
                                     <h5>إجمالي مبالغ الطلبات</h5>
-                                    <p>ر.س<span class="odometer" data-count="1200">00</span></p>
+                                    <p>ر.س <span class="odometer"
+                                            data-count="{{ number_format(\App\Models\Order::sum('total_price'), 2) }}">00</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +60,9 @@
                             <div class="contact-info-box text-center mb-30">
                                 <div class="contact-info-content">
                                     <h5>تاريخ أخر طلب</h5>
-                                    <p><span class="odometer" data-count="2022">00</span>/<span class="odometer"
-                                            data-count="3">00</span>/<span class="odometer" data-count="23">00</span>
+                                    <p>
+                                        <span class="odometer"
+                                            data-count="{{ \App\Models\Order::orderBy('created_at', 'DESC')->pluck('created_at') }}">00</span>
                                     </p>
                                 </div>
                             </div>
@@ -69,65 +72,6 @@
             </div>
         </section>
         <!-- contact-area-end -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">تفاصيل الطلب</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="shop-cart-area">
-                            <div class="table-responsive-xl">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="product-thumbnail"></th>
-                                            <th class="product-name">المنتج</th>
-                                            <th class="product-quantity">الكمية</th>
-                                            <th class="product-subtotal">التكلفة</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{-- @foreach ($orderItems as $orderItem) --}}
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <a href="#" class="wishlist-remove">
-                                                    <i class="flaticon-cancel-1"></i>
-                                                </a>
-                                                <a href="shop-details.html">
-                                                    {{-- <img src="{{ $orderItem->item_photo }}" alt=""> --}}
-                                                    <img src="#" alt="">
-                                                </a>
-                                            </td>
-                                            <td class="product-name">
-                                                {{-- <h4><a href="#">{{ $orderItem->item_name }}</a></h4> --}}
-                                                <h4><a href="#"></a></h4>
-                                            </td>
-                                            {{-- <td class="product-quantity">{{ $orderItem->quantity }}</td> --}}
-                                            <td class="product-quantity">2</td>
-                                            <td class="product-subtotal">
-                                                {{-- <span>{{ $orderItem->current_price }}</span>ر.س --}}
-                                                <span>500</span>ر.س
-                                            </td>
-                                        </tr>
-                                        {{-- @endforeach --}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <!-- wishlist-area -->
         <section class="wishlist-area pt-100 pb-100">
@@ -154,13 +98,94 @@
                                                 <span>{{ $order->total_price }}</span>ر.س
                                             </td>
                                             <td class="product-stock-status">
-                                                <span>{{ $order->order_status }}</span>
+                                                @if ($order->order_status == 'Unpaid')
+                                                    <span>غير مدفوع</span>
+                                                @elseif ($order->order_status == 'paid')
+                                                    <span>مدفوع</span>
+                                                @elseif ($order->order_status == 'wait_shimp')
+                                                    <span>بانتظار الشحن</span>
+                                                @elseif ($order->order_status == 'shimp')
+                                                    <span>قيد الشحن</span>
+                                                @elseif ($order->order_status == 'done')
+                                                    <span>تم التسليم</span>
+                                                @elseif ($order->order_status == 'canceled')
+                                                    <span>ملغي</span>
+                                                @endif
                                             </td>
                                             <td class="product-add-to-cart">
                                                 <span class="btn" data-toggle="modal"
-                                                    data-id="{{ $order->id }}" data-target="#exampleModal">
+                                                    data-id="{{ $order->id }}"
+                                                    data-target="#exampleModal{{ $order->id }}">
                                                     <i class="fa fa-info"></i>
                                                 </span>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal{{ $order->id }}"
+                                                    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    تفاصيل الطلب
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="shop-cart-area">
+                                                                    <div class="table-responsive-xl">
+                                                                        <table class="table mb-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="product-thumbnail"></th>
+                                                                                    <th class="product-name">المنتج</th>
+                                                                                    <th class="product-quantity">الكمية</th>
+                                                                                    <th class="product-subtotal">التكلفة
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($order->orderItems as $orderItem)
+                                                                                    <tr>
+                                                                                        <td class="product-thumbnail">
+                                                                                            <a href="#"
+                                                                                                class="wishlist-remove">
+                                                                                                <i
+                                                                                                    class="flaticon-cancel-1"></i>
+                                                                                            </a>
+                                                                                            <a href="shop-details.html">
+                                                                                                <img src="{{ $orderItem->item_photo }}"
+                                                                                                    alt="">
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td class="product-name">
+                                                                                            <h4>
+                                                                                                <a href="#">
+                                                                                                    {{ $orderItem->item_name }}
+                                                                                                </a>
+                                                                                            </h4>
+                                                                                        </td>
+                                                                                        <td class="product-quantity">
+                                                                                            {{ $orderItem->quantity }}
+                                                                                        </td>
+                                                                                        <td class="product-subtotal">
+                                                                                            <span>{{ $orderItem->current_price }}</span>ر.س
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">إغلاق</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -172,7 +197,6 @@
             </div>
         </section>
         <!-- wishlist-area-end -->
-
     </main>
     <!-- main-area-end -->
 @endsection
