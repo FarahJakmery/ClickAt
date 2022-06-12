@@ -35,7 +35,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        if (!$token = auth()->attempt($validator->validated())) {
+        if (!$token = auth('api')->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
@@ -62,7 +62,7 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
 
-        $token = auth()->attempt($validator->validated());
+        $token = auth('api')->attempt($validator->validated());
 
         return response()->json([
             'message' => 'User successfully registered',
@@ -78,7 +78,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
+        auth('api')->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
     /**
@@ -88,7 +88,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->createNewToken(auth()->refresh());
+        return $this->createNewToken(auth('api')->refresh());
     }
     /**
      * Get the authenticated User.
@@ -97,7 +97,7 @@ class AuthController extends Controller
      */
     public function userProfile()
     {
-        return response()->json(auth()->user());
+        return response()->json(auth('api')->user());
     }
     /**
      * Get the token array structure.
@@ -112,7 +112,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => null,
-            'user' => auth()->user()
+            'user' => auth('api')->user()
         ]);
     }
 }
