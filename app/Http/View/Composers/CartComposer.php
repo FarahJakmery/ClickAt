@@ -29,6 +29,7 @@ class CartComposer
             $fastProducts = Fastproduct::all();
             $ids = [];
             $count_items = 0;
+
             foreach ($fastProducts as $fastProduct) {
                 $fastProduct_id = Cookie::get($fastProduct->id);
                 if ($fastProduct_id == null) {
@@ -44,7 +45,6 @@ class CartComposer
             $price_for_all_thing = 0;
             // If the arry of Ids is not null => so it has items in it
             if ($ids != null) {
-                $mainCategories = Mcategory::all();
                 $fastProduct_detailss = [];
                 $price = 0;
                 $quan_cart = 1;
@@ -53,8 +53,9 @@ class CartComposer
                     $price                = 0;
                     $fastProduct_quantity = Cookie::get("quantity" . $fastProduct);
                     $fastProduct_price    = Cookie::get("price" . $fastProduct);
+                    // dd($fastProduct_price);
                     $fastProduct          = Fastproduct::where('id', $fastProduct)->first();
-                    $all_price            = $price + $fastProduct_price;
+                    $all_price            = $price + (int)$fastProduct_price;
                     $price                = $all_price * $fastProduct_quantity;
                     $price_for_all_thing += $price;
                     $final                = array(
@@ -65,8 +66,6 @@ class CartComposer
                     );
                     array_push($fastProduct_detailss, $final);
                 }
-                // return $fastProduct_detailss;
-                // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'count_items', 'mainCategories', 'price'));
                 $array = [
                     'price_for_all_thing' => $price_for_all_thing,
                     'count_items' => $count_items,
@@ -76,13 +75,11 @@ class CartComposer
             }
             // If the arry of Ids is null => so it has not items in it
             else {
-                $mainCategories = Mcategory::all();
                 $fastProduct_detailss = [];
                 $quan_cart = 0;
-                // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'mainCategories', 'count_items'));
                 $array = [
-                    'price_for_all_thing' => $price_for_all_thing,
-                    'count_items' => $count_items,
+                    'price_for_all_thing'  => $price_for_all_thing,
+                    'count_items'          => $count_items,
                     'fastProduct_detailss' => $fastProduct_detailss,
                 ];
                 $view->with('array', $array);
@@ -90,7 +87,7 @@ class CartComposer
         }
         // If the user is logged in
         else {
-            $user  = User::find(Auth::user()->id);
+            $user  = Auth::user();
             $fastProducts = Fastproduct::all();
             $ids = [];
             foreach ($fastProducts as $fastProduct) {
@@ -102,34 +99,50 @@ class CartComposer
                 }
             }
 
-            foreach ($ids as $id) {
-                $fastProduct_quantity = Cookie::get("quantity" . $id);
-                $fastProduct_cost     = Cookie::get("price" . $id);
-                $fastProduct          = Fastproduct::where('id', $id)->first();
-                $total_price          = $fastProduct_quantity * $fastProduct_cost;
-                $fastProduct_cookies  = Cart::where('product_id', $fastProduct->id)->where('user_id', $user->id)->where('status', 'waiting')->first();
-                if ($fastProduct_cookies == null) {
-                    $data = [
-                        'product_id'     => $fastProduct->id,
-                        'user_id'     => $user->id,
-                        'quantity'    => $fastProduct_quantity,
-                        'price'       => $fastProduct_cost,
-                        'total_price' => $total_price,
-                        'status'      => 'waiting'
-                    ];
-                    Cart::create($data);
-                } else {
-                    $fastProduct_quantity1 = $fastProduct_cookies->quantity + $fastProduct_quantity;
-                    $total_price1          = $fastProduct_cookies->total_price + $total_price;
-                    $data = [
-                        'quantity'    => $fastProduct_quantity1,
-                        'total_price' => $total_price1,
-                    ];
-                    $fastProduct_cookies->update($data);
-                }
-                // this line is to emptying cookie
-                Cookie::queue(Cookie::forget($id));
-            }
+            // foreach ($ids as $id) {
+            //     $fastProduct_quantity = Cookie::get("quantity" . $id);
+            //     $fastProduct_cost     = Cookie::get("price" . $id);
+            //     $fastProduct          = Fastproduct::where('id', $id)->first();
+            //     $total_price          = $fastProduct_quantity * (int)$fastProduct_cost;
+
+            //     if(Cart::where('product_id', $fastProduct->id)->where('user_id', $user->id)->where('status', 'waiting')->exists()){
+            //         $fastProduct_cookies  = Cart::where('product_id', $fastProduct->id)->where('user_id', $user->id)->where('status', 'waiting')->first();
+            //     }//
+            //     else{
+            //         $fastProduct_cookies = null;
+            //     }
+
+            //     if ($fastProduct_cookies == null) {
+            //         $data = [
+            //             'user_id'     => $user->id,
+            //             'product_id'  => $fastProduct->id,
+            //             'quantity'    => $fastProduct_quantity,
+            //             'price'       => $fastProduct_cost,
+            //             'total_price' => $total_price,
+            //             'status'      => 'waiting'
+            //         ];
+
+            //         Cart::create($data);
+
+            //     } //
+            //     else {
+            //         if(Cookie::get($id)){
+            //             $fastProduct_quantity1 = $fastProduct_cookies->quantity + $fastProduct_quantity;
+            //             $total_price1          = $fastProduct_cookies->total_price + $total_price;
+            //             $data = [
+            //                 'quantity'    => $fastProduct_quantity1,
+            //                 'total_price' => $total_price1,
+            //             ];
+            //             $fastProduct_cookies->update($data);
+            //         }
+            //     }
+
+
+            //     // this line is to emptying cookie
+            //     Cookie::queue(Cookie::forget("quantity" . $id));
+            //     Cookie::queue(Cookie::forget("price" . $id));
+            //     Cookie::queue(Cookie::forget($id));
+            // }
 
 
             $fast_Products_From_Cart          = Cart::where('user_id', Auth::user()->id)->where('status', 'waiting')->get();
@@ -137,16 +150,18 @@ class CartComposer
             $price_for_all_thing = 0;
             $price = 0;
             foreach ($fast_Products_From_Cart as $fast_Product) {
+
                 $price = 0;
                 $pricee = 0;
                 $fastProductInformation    = Fastproduct::where('id', $fast_Product->product_id)->first();
-                $all_price                 = $pricee + $fast_Product->price;
-                $all_pricee                = $price  + $fast_Product->total_price;
+                $all_price                 = $pricee + (int)$fast_Product->price;
+                $all_pricee                = $price  + (int)$fast_Product->total_price;
                 $price                     = $all_pricee;
                 $price_for_all_thing      += $price;
                 $final                  = array(
                     'fast_product'      => $fastProductInformation,
                     'cart'              => $fast_Product,
+                    'quantity'          => $fast_Product->quantity,
                     'price'             => $price,
                     'all_price'         => $all_price
                 );
@@ -154,10 +169,11 @@ class CartComposer
             }
 
             $count_items = count($fast_Products_From_Cart);
-            // return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'user', 'count_items', 'fastProduct_detailss', 'fast_Products_From_Cart', 'price'));
+
             $array = [
                 'price_for_all_thing' => $price_for_all_thing,
                 'count_items' => $count_items,
+
                 'fastProduct_detailss' => $fastProduct_detailss,
             ];
             $view->with('array', $array);
