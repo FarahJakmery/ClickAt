@@ -376,12 +376,14 @@ $('.brand-active').slick({
 	function updateTimer() {
 		let timer=$('.data-left-time');
 		timer.each(function () {
+			var thisItem = $(this)
 			var maxPrice = $(this).data("maxprice");
 			var minPrice = $(this).data("minprice");
 			var currentPrice;
 			var decreasePrice = $(this).data("decreaseprice");
 			var decreseTime = parseInt($(this).data("decresetime"));
-			var thisItem = $(this).parents('.exclusive-item').find('.new-price span')
+			var thisItemPrice = $(this).parents('.exclusive-item').find('.new-price span')
+			var endTime = $(this).data("endtime");
 			
 			
 			var dataStart= $(this).data("start");
@@ -398,6 +400,8 @@ $('.brand-active').slick({
 			var leftTime = left * 100 / diff ;
 			var days = Math.floor(diffCounter / (1000 * 60 * 60 * 24));
 			var hours = Math.floor(diffCounter / (1000 * 60 * 60));
+			var minutes = Math.floor(diffCounter / (1000 * 60 ));
+			// console.log(hours)
 			// Count the seconds that have passed
 			var secsPassed = Math.floor(left / (1000));
 			// Count how many groups of 20 minutes that have passed
@@ -412,20 +416,23 @@ $('.brand-active').slick({
 			if ( temp1 == 1 ) {
 				currentPrice = (maxPrice - (secs3 * decreasePrice)).toFixed(3);
 				$(this).attr('data-currentprice', currentPrice);
-				thisItem.text(currentPrice);
+				thisItemPrice.text(currentPrice);
 			}
 			if ( secsCount == 1 ) {
-				var currentPrice1 = parseFloat(thisItem.text());
+				var currentPrice1 = parseFloat(thisItemPrice.text());
 				// console.log(currentPrice1)
 				if ( currentPrice1 > minPrice ) {
 					currentPrice1 = (currentPrice1 - decreasePrice).toFixed(3);
 					// console.log(decreasePrice)
+					if (currentPrice1 < minPrice) {
+						currentPrice1 = minPrice;
+					}
 					$(this).attr('data-currentprice', currentPrice1);
 					// console.log(currentPrice)
 				} else if ( currentPrice1 < minPrice ){
 					currentPrice1 = minPrice;
 				}
-				thisItem.text(currentPrice1);
+				thisItemPrice.text(currentPrice1);
 				// console.log(currentPrice)
 			}
 			// $(this).attr('data-currentprice', currentPrice);
@@ -443,6 +450,10 @@ $('.brand-active').slick({
 				var H = 0;
 				var M = 0;
 				var S = 0;
+				parseFloat(thisItemPrice.text(minPrice))
+			}
+			if (minutes <= -120) {
+				thisItem.attr('data-endtime', 'true')
 			}
 			$(this).parents(".exclusive-item").find(".coming-time").html('<div class="time-count sec"><span>'+ S +'</span>Sec</div><div class="time-count min"><span>'+ M +'</span>Min</div><div class="time-count hour"><span>'+ H +'</span>Hr</div><div class="time-count day"><span>'+ D +'</span>Day</div>');
 		})
@@ -451,7 +462,7 @@ $('.brand-active').slick({
 setInterval(updateTimer, 1000);
 
 	// $('.fast-sell-section .exclusive-item').each(function () {
-	// 	var thisItem = $(this)
+	// 	var thisItemPrice = $(this)
 	// 	var itemInfo = $(this).find('.data-left-time');
 	// 	var maxPrice = itemInfo.data("maxprice");
 	// 	var minPrice = itemInfo.data("minprice");
@@ -465,7 +476,7 @@ setInterval(updateTimer, 1000);
 	// 		} else if (price < minPrice ){
 	// 			price = minPrice;
 	// 		}
-	// 		thisItem.find('.new-price span').text(price);
+	// 		thisItemPrice.find('.new-price span').text(price);
 	// 	}
 	// 	setInterval( updatePrice , 1000);
 	// })
@@ -800,7 +811,7 @@ $(".qtybutton").on("click", function () {
 	}
 	$button.parent().find("input").val(newVal);
 	var proPrice = $button.parents('.product-quantity').siblings(".product-price").find('span').text();
-	$button.parents('.product-quantity').siblings(".product-subtotal").find('span').text("$"+(newVal * proPrice));
+	$button.parents('.product-quantity').siblings(".product-subtotal").find('span').text((newVal * proPrice));
 	totalPriceCalc()
 });
 function totalPriceCalc(){

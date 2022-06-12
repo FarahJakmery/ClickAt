@@ -2609,7 +2609,7 @@ label {
 }
 .exclusive-item-three .exclusive-item-content .add-to-wishlist {
     position: absolute;
-    top: 10px;
+    top: 33px;
     left: 20%;
 }
 .exclusive-item-three .old-price {
@@ -2634,7 +2634,11 @@ label {
     font-size: 20px;
     padding: 10px 20px 10px 20px;
 }
-
+.exclusive-item-three .in-cart p {
+    font-size: 16px;
+    color: #0568ab;
+    margin: 24px auto 34px;
+}
 /* 9. Deal of the day */
 .deal-of-the-day .custom-col-4 {
     -ms-flex: 0 0 35.7%;
@@ -4585,65 +4589,33 @@ tbody .product-name span ,
 }
 
 /* 19. Pagination */
-.pagination,
-.pagination-wrap ul {
-    display: flex;
-    align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-    background: #f6f3f1;
-    padding: 25px 20px 15px;
-}
-.pagination-wrap ul li {
-	margin: 10px 2.5px;
-}
-.pagination-wrap ul li.prev {
-	margin-left: 20px;
-}
-.pagination-wrap ul li.next {
-	margin-right: 20px;
-}
-.pagination-wrap ul li.prev a,
-.pagination-wrap ul li.next a {
-	height: auto;
-	width: auto;
-	border-radius: 0;
-	line-height: initial;
-}
-/* .page-item.active .page-link , */
-.pagination .page-item a ,
-.pagination-wrap ul li a {
-    display: block;
-    line-height: 32px;
-    text-align: center;
-    background: transparent;
-    color: #696969;
-    font-family: 'NeoSans' ;
-    font-weight: 600;
-}
-.page-item.disabled .page-link {
-    color: #ffffff;
-    pointer-events: none;
-    cursor: auto;
-    background-color: #0568ab;
-    border-color: #0568ab;
-}
-.page-item.active .page-link{
-    cursor: default;
-}
-.page-item.active .page-link,
-.page-item:hover .page-link,
-.pagination-wrap ul li a:hover,
-.pagination-wrap ul li.active a {
-	background: #0568ab;
-	color: #fff;
-}
-.pagination-wrap ul li.prev a:hover,
-.pagination-wrap ul li.next a:hover {
-	background: transparent;
-	color: #0568ab;
-}
 
+.section-pagination {
+    /* direction: ltr; */
+    background: #f6f3f1;
+    padding: 25px 20px 25px;
+    color: #0568ab;
+}
+.section-pagination a:hover,
+.section-pagination span[aria-current="page"] span,
+.section-pagination span[aria-disabled="true"] span{
+    background-color: #0568ab !important;
+    color: white !important;
+    /* border-color: #0568ab; */
+}
+.section-pagination a{
+    color: #0568ab !important;
+    transition: .3s;
+}
+.section-pagination p {
+    margin: 15px 0 !important;
+}
+.section-pagination a[aria-label="&laquo; Previous"] ,
+.section-pagination span[aria-label="&laquo; Previous"] ,
+.section-pagination a[aria-label="Next &raquo;"] ,
+.section-pagination span[aria-label="Next &raquo;"] {
+    transform: rotate(180deg);
+}
 /* 20. Checkout */
 .checkout-wrap .title {
     font-size: 20px;
