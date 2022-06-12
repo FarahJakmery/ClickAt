@@ -75,20 +75,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-
-
-// Route::view('/home', 'User.Auth.home')->name('home');
-
-// Route::view('/contact', 'pages.contact')->name('contact');
 // ============================ Users Routes ============================
+
+// Add To Cart Route
+Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+// Send Message To Email
+Route::post('/sent_message_to_email', [PageController::class, 'sent_message_to_email']);
 Route::name('user.')->group(function () {
 
-
+    // Home Route
     Route::view('/home', 'User.Auth.home')->name('home');
-    Route::view('/login', 'User.Auth.login')->name('login');
-    Route::post('/create', [UserController::class, 'create'])->name('create');
+    // Login Route
     Route::post('/check', [UserController::class, 'check'])->name('check');
-
+    Route::view('/login', 'User.Auth.login')->name('login');
+    // Register Route
+    Route::post('/create', [UserController::class, 'create'])->name('create');
+    // Contact_Us Route
+    Route::view('/contact', 'User.Contact.contact')->name('contact');
     // Main Categories Routes
     Route::resource('mcategories', UserMcategoryController::class);
     Route::get('MainCategory/{MainCategoryID}/fastSellingProducts', [UserMcategoryController::class, 'showAllFastSellingProductsBelogsToMainCategory'])->name('showFastProductsForMainCategory');
@@ -103,14 +106,18 @@ Route::name('user.')->group(function () {
     Route::get('about', [PageController::class, 'about'])->name('about');
     // Search Routes
     Route::get('searchResult', [SearchController::class, 'search'])->name('search');
-    // Add To Cart
-    Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+    // Cart Route
     Route::get('/Cart', [CartController::class, 'show'])->name('Cart');
+    // Remove From Cart Route
+    Route::delete('remove_From_Cart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
     // Order Routes
     Route::resource('Orders', UserOrderController::class);
     Route::get('orderItems', [UserOrderController::class, 'getOrderItems'])->name('getOrderItems');
     // Payment Routes
     Route::get('Payment_Page', [PaymentController::class, 'getPaymentPage'])->name('getPaymentPage');
+    // Change Order Status After Payment
+    Route::post('/paytaps_response/{id}', [PaymentController::class, 'paytaps_response']);
+
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
         Route::get('/profile/{profile}/edit', [UserController::class, 'edit'])->name('editProfile');
@@ -121,5 +128,9 @@ Route::name('user.')->group(function () {
         Route::post('AddFastProductToWishlist', [WishlistController::class, 'storeFastProduct'])->name('AddFastProductToWishlist');
         Route::post('AddProductToWishlist', [WishlistController::class, 'storeProduct'])->name('AddProductToWishlist');
         Route::delete('Wishlistdestroy', [WishlistController::class, 'destroy'])->name('wishlistDestroy');
+
+        // Checkout Route
+        Route::get('checkoutpage', [CartController::class, 'checkoutpage'])->name('checkoutpage');
+        Route::post('checkout', [PaymentController::class, 'checkout'])->name('checkout');
     });
 });
