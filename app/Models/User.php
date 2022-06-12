@@ -98,4 +98,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Order::class);
     }
+
+    // ================================ Address Relationship  ================================
+    /**
+     * Get the addres associated with the user.
+     */
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
 }
