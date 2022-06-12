@@ -17,14 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id', Auth::user()->id)->get();
+        $orders = Order::where('user_id', Auth::user()->id)->paginate(10);
         return view('User.Order.orders', compact('orders'));
-    }
-
-
-    public function getOrderItems($id)
-    {
-        $orderItems = OrderItem::where('order_id', $id)->get();
-        return json_encode($orderItems);
     }
 }

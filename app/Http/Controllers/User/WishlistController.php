@@ -24,10 +24,8 @@ class WishlistController extends Controller
     public function storeFastProduct()
     {
         if (!auth()->user()->fastProductWishlistHas(request('FastProductId'))) {
-            auth()->user()->fastProductWishlist()->attach(request('FastProductId'));
-            return $this->apiResponse(null, 'The Fast Product Added to Wishlist', 200);
+            auth()->user()->fastProductWishlist()->attach(request('FastProductId'), ['price' => request('FastProductPrice')]);
         }
-        return $this->apiResponse(null, 'The Fast Product already Added to Wishlist', 401);
     }
 
 

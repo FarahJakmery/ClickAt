@@ -15,7 +15,7 @@ class CodeproductController extends Controller
      */
     public function index()
     {
-        $codes = Codeproduct::all();
+        $codes = Codeproduct::paginate(2);
         return view('User.Code.codes', compact('codes'));
     }
 }

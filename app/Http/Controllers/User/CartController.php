@@ -18,7 +18,6 @@ class CartController extends Controller
     {
         // If the User is not logged in
         if (Auth::user() == null) {
-            echo "not loin";
             $minutes = 1440;
             $product_id = Cookie::get($request->product_id);
 
@@ -35,11 +34,16 @@ class CartController extends Controller
                 $quantity = $request->quantity + $product_quantity;
                 Cookie::queue("quantity" . $request->product_id, $quantity, $minutes);
                 Cookie::queue("price" . $request->product_id, $request->max_price, $minutes);
+
+
+                // Update The Price in the Cookie
+                $product_price = Cookie::get("price" . $request->product_id);
+                $price = $request->max_price + $product_price;
+                Cookie::queue("price" . $request->product_id, $price, $minutes);
             }
         }
         // If the User is logged in
         else {
-            echo " loin";
             $user = User::find(Auth::user()->id);
             $FastProduct = Fastproduct::where('id', $request->product_id)->first();
             $cart_items = Cart::where('product_id', $request->product_id)->where('status', 'waiting')->first();
@@ -74,6 +78,7 @@ class CartController extends Controller
                 $FastProduct = $cart_items->update($data);
             }
         }
+        return response()->json(['data' => 'data']);
     }
 
 
@@ -135,36 +140,37 @@ class CartController extends Controller
             $price_for_all_thing = 0;
             // If the arry of Ids is not null => so it has items in it
             if ($ids != null) {
-                $mainCategories = Mcategory::all();
                 $fastProduct_detailss = [];
                 $price = 0;
                 $quan_cart = 1;
                 $price_for_all_thing = 0;
-                foreach ($ids as $fastProduct) {
+                foreach ($ids as $id) {
                     $price                = 0;
-                    $fastProduct_quantity = Cookie::get("quantity" . $fastProduct);
-                    $fastProduct_price    = Cookie::get("price" . $fastProduct);
-                    $fastProduct          = Fastproduct::where('id', $fastProduct)->first();
-                    $all_price            = $price + $fastProduct_price;
+                    $fastProduct_quantity = Cookie::get("quantity" . $id);
+                    $fastProduct_price    = Cookie::get("price" . $id);
+                    $fastProduct          = Fastproduct::where('id', $id)->first();
+                    // السعر الإفرادي
+                    $all_price            = $price + (int)$fastProduct_price;
+                    // السعر الإجمالي
                     $price                = $all_price * $fastProduct_quantity;
                     $price_for_all_thing += $price;
                     $final                = array(
                         'fast_product'               => $fastProduct,
                         'fast_product_quantity'      => $fastProduct_quantity,
                         'price'                      => $all_price,
-                        'all_price'                  => $price
+                        'all_price'                  => $price,
+                        'price_for_all_thing'        => $price_for_all_thing
                     );
                     array_push($fastProduct_detailss, $final);
                 }
-                // return $fastProduct_detailss;
-                return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'count_items', 'mainCategories', 'price'));
+                return $fastProduct_detailss;
+                return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'count_items'));
             }
             // If the arry of Ids is null => so it has not items in it
             else {
-                $mainCategories = Mcategory::all();
                 $fastProduct_detailss = [];
                 $quan_cart = 0;
-                return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'mainCategories', 'count_items'));
+                return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'fastProduct_detailss', 'count_items'));
             }
         }
         // If the user is logged in
@@ -185,7 +191,7 @@ class CartController extends Controller
                 $fastProduct_quantity = Cookie::get("quantity" . $id);
                 $fastProduct_cost     = Cookie::get("price" . $id);
                 $fastProduct          = Fastproduct::where('id', $id)->first();
-                $total_price          = $fastProduct_quantity * $fastProduct_cost;
+                $total_price          = $fastProduct_quantity * (int)$fastProduct_cost;
                 $fastProduct_cookies  = Cart::where('product_id', $fastProduct->id)->where('user_id', $user->id)->where('status', 'waiting')->first();
                 if ($fastProduct_cookies == null) {
                     $data = [
@@ -207,6 +213,8 @@ class CartController extends Controller
                     $fastProduct_cookies->update($data);
                 }
                 // this line is to emptying cookie
+                Cookie::queue(Cookie::forget("quantity" . $id));
+                Cookie::queue(Cookie::forget("price" . $id));
                 Cookie::queue(Cookie::forget($id));
             }
 
@@ -219,15 +227,15 @@ class CartController extends Controller
                 $price = 0;
                 $pricee = 0;
                 $fastProductInformation    = Fastproduct::where('id', $fast_Product->product_id)->first();
-                $all_price                 = $pricee + $fast_Product->price;
-                $all_pricee                = $price  + $fast_Product->total_price;
+                $all_price                 = $pricee + (int)$fast_Product->price;
+                $all_pricee                = $price  + (int)$fast_Product->total_price;
                 $price                     = $all_pricee;
                 $price_for_all_thing      += $price;
                 $final                = array(
                     'fast_product'              => $fastProductInformation,
                     'fast_product_quantity'     => $fast_Product->quantity,
-                    'price'                     => $price,
-                    'all_price'                 => $all_price
+                    'price'                     => $all_price,
+                    'all_price'                 => $price
                 );
                 array_push($fastProduct_detailss, $final);
             }
@@ -235,5 +243,76 @@ class CartController extends Controller
             $count_items = count($fast_Products_From_Cart);
             return view('User.Cart.cart', compact('price_for_all_thing', 'quan_cart', 'user', 'count_items', 'fastProduct_detailss', 'fast_Products_From_Cart', 'price'));
         }
+    }
+
+    public function delete_cart_item(Request $request)
+    {
+        $quantity = $request->quantity;
+        $fastProduct = Fastproduct::where('id', $request->productId)->first();
+        $price = $fastProduct->max_price * $quantity;
+        if (Auth::user() == null) {
+            $productId = Cookie::get($request->productId);
+            if ($productId !== null) {
+                Cookie::queue(Cookie::forget("quantity" . $request->product_id));
+                Cookie::queue(Cookie::forget("price" . $request->product_id));
+                $minutes = 1440;
+                Cookie::queue("quantity" . $request->productId, $quantity, $minutes);
+                Cookie::queue("price" . $request->productId, $price, $minutes);
+            }
+        } else {
+            $user = Auth::user();
+            if (Cart::where('user_id', $user->id)->where('product_id', $request->productId)->where('status', 'waiting')->exists()) {
+                $fast_Products_From_Cart = Cart::where('user_id', $user->id)->where('product_id', $request->productId)->where('status', 'waiting')->first();
+                $fastProduct = Fastproduct::where('id', $request->productId)->first();
+                $price = $fastProduct->max_price * $quantity;
+                $data = [
+                    'quantity' =>    $quantity,
+                    'total_price' => $price
+                ];
+                $fast_Products_From_Cart->update($data);
+            }
+        }
+
+        return response()->json('1');
+    }
+
+    public function removeFromCart(Request $request)
+    {
+        // If the User is not logged in
+        if (Auth::user() == null) {
+            $product_id = Cookie::get($request->product_id);
+
+            // If the product is already added to the Cookie
+            if ($product_id !== null) {
+                Cookie::queue(Cookie::forget($product_id));
+                Cookie::queue(Cookie::forget("quantity" . $request->product_id));
+                Cookie::queue(Cookie::forget("price" . $request->product_id));
+            }
+        }
+        // If the User is logged in
+        else {
+            $u = Auth::user();
+            $user = $u->id;
+            $cart_item = Cart::where('product_id', $request->product_id)->where('user_id', $user)->where('status', 'waiting')->first();
+            // If The item was added to cart before
+            if ($cart_item !== null) {
+                $cart_item->delete();
+            }
+        }
+    }
+
+
+    public function checkoutpage()
+    {
+        // Check The Product quantites
+        $cart = Cart::where('user_id', auth()->id())->where('status', 'waiting')->get();
+        $products = Fastproduct::select('id', 'quantity')->whereIn('id', $cart->pluck('product_id'))->pluck('quantity', 'id');
+        foreach ($cart as $cartProduct) {
+            if (!isset($products[$cartProduct->product_id]) || $products[$cartProduct->product_id] < $cartProduct->quantity) {
+                return redirect()->route('user.Cart')->with('fail', 'الكمية المطلوبة من المنتج' . $products[$cartProduct->product_id] . 'غير متوفرة');
+            }
+        }
+        $user = User::with('address')->find(auth()->id());
+        return view('User.Checkout.Checkout', compact('user'));
     }
 }

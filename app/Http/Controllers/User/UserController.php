@@ -97,9 +97,6 @@ class UserController extends Controller
         }
     }
 
-
-
-
     function logout()
     {
         Auth::logout();
